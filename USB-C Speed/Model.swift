@@ -44,6 +44,7 @@ struct USBDevice: Codable {
   let media: [Media]?
   let productID, vendorID: String
   let serialNum: String?
+  var items: [USBDevice]?
 
   enum CodingKeys: String, CodingKey {
     case name = "_name"
@@ -58,6 +59,25 @@ struct USBDevice: Codable {
     case productID = "product_id"
     case vendorID = "vendor_id"
     case serialNum = "serial_num"
+    case items = "_items"
+  }
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+
+    name = try container.decode(String.self, forKey: .name)
+    bcdDevice = try container.decode(String.self, forKey: .bcdDevice)
+    busPower = try container.decode(String.self, forKey: .busPower)
+    busPowerUsed = try container.decode(String.self, forKey: .busPowerUsed)
+    deviceSpeed = try container.decode(String.self, forKey: .deviceSpeed)
+    extraCurrentUsed = try container.decode(String.self, forKey: .extraCurrentUsed)
+    locationID = try container.decode(String.self, forKey: .locationID)
+    manufacturer = try container.decode(String.self, forKey: .manufacturer)
+    media = try container.decodeIfPresent([Media].self, forKey: .media)
+    productID = try container.decode(String.self, forKey: .productID)
+    vendorID = try container.decode(String.self, forKey: .vendorID)
+    serialNum = try container.decodeIfPresent(String.self, forKey: .serialNum)
+    items = try container.decodeIfPresent([USBDevice].self, forKey: .items)
   }
 }
 

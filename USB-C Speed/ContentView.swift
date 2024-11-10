@@ -16,7 +16,8 @@ struct ContentView: View {
 
   var body: some View {
     if let usbData {
-      USBDataView(usbData: usbData)
+//      USBDataView(usbData: usbData)
+      SimplifiedUSBDataView(usbData: usbData)
     } else {
       VStack {
         Image(systemName: "globe")

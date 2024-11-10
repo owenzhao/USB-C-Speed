@@ -60,16 +60,24 @@ struct USBDeviceView: View {
     DisclosureGroup(isExpanded: $isExpanded) {
       VStack(alignment: .leading) {
         Text("BCD Device: \(device.bcdDevice)")
-        Text("Bus Power: \(device.busPower)")
-        Text("Bus Power Used: \(device.busPowerUsed)")
+        Text("Bus Power: \(device.busPower)mA")
+        Text("Bus Power Used: \(device.busPowerUsed)mA")
         Text("Device Speed: \(getDeviceSpeedString(device.deviceSpeed))")
-        Text("Extra Current Used: \(device.extraCurrentUsed)")
+        Text("Extra Current Used: \(device.extraCurrentUsed)mA")
         Text("Location ID: \(device.locationID)")
         Text("Manufacturer: \(device.manufacturer)")
         Text("Product ID: \(device.productID)")
         Text("Vendor ID: \(device.vendorID)")
         if let serialNum = device.serialNum {
           Text("Serial Number: \(serialNum)")
+        }
+
+        // 添加这里以处理嵌套的设备
+        if let items = device.items {
+          ForEach(items, id: \.name) { nestedDevice in
+            USBDeviceView(device: nestedDevice)
+              .padding(.leading, 20)
+          }
         }
 
         /* 不显示 MediaView
