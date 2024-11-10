@@ -1,0 +1,230 @@
+{
+  "SPUSBDataType" : [
+    {
+      "_items" : [
+        {
+          "_items" : [
+            {
+              "_name" : "MD202",
+              "bcd_device" : "20.01",
+              "bus_power" : "900",
+              "bus_power_used" : "0",
+              "device_speed" : "super_speed_plus",
+              "extra_current_used" : "0",
+              "location_id" : "0x01210000 / 3",
+              "manufacturer" : "HIKSEMI",
+              "Media" : [
+                {
+                  "_name" : "MD202",
+                  "bsd_name" : "disk9",
+                  "Logical Unit" : 0,
+                  "partition_map_type" : "guid_partition_map_type",
+                  "removable_media" : "no",
+                  "size" : "1.02 TB",
+                  "size_in_bytes" : 1024209543168,
+                  "smart_status" : "Verified",
+                  "USB Interface" : 0,
+                  "volumes" : [
+                    {
+                      "_name" : "EFI",
+                      "bsd_name" : "disk9s1",
+                      "file_system" : "MS-DOS FAT32",
+                      "iocontent" : "EFI",
+                      "size" : "209.7 MB",
+                      "size_in_bytes" : 209715200,
+                      "volume_uuid" : "0E239BC6-F960-3107-89CF-1C97F78BB46B"
+                    },
+                    {
+                      "_name" : "disk9s2",
+                      "bsd_name" : "disk9s2",
+                      "iocontent" : "Apple_APFS",
+                      "size" : "1.02 TB",
+                      "size_in_bytes" : 1023999787008
+                    }
+                  ]
+                }
+              ],
+              "product_id" : "0x9210",
+              "serial_num" : "012345682029",
+              "vendor_id" : "0x0bda  (Realtek Semiconductor Corp.)"
+            }
+          ],
+          "_name" : "USB3.0 Hub",
+          "bcd_device" : "1.02",
+          "bus_power" : "900",
+          "bus_power_used" : "0",
+          "device_speed" : "super_speed_plus",
+          "extra_current_used" : "0",
+          "location_id" : "0x01200000 / 2",
+          "manufacturer" : "Fresco Logic, Inc.",
+          "product_id" : "0x5500",
+          "vendor_id" : "0x1d5c  (Fresco Logic Inc.)"
+        },
+        {
+          "_items" : [
+            {
+              "_name" : "USB Receiver",
+              "bcd_device" : "44.01",
+              "bus_power" : "500",
+              "bus_power_used" : "98",
+              "device_speed" : "full_speed",
+              "extra_current_used" : "0",
+              "location_id" : "0x01120000 / 4",
+              "manufacturer" : "Logitech",
+              "product_id" : "0xc53f",
+              "vendor_id" : "0x046d  (Logitech Inc.)"
+            }
+          ],
+          "_name" : "USB2.0 Hub",
+          "bcd_device" : "1.02",
+          "bus_power" : "500",
+          "bus_power_used" : "0",
+          "device_speed" : "high_speed",
+          "extra_current_used" : "0",
+          "location_id" : "0x01100000 / 1",
+          "manufacturer" : "Fresco Logic, Inc.",
+          "product_id" : "0x5510",
+          "vendor_id" : "0x1d5c  (Fresco Logic Inc.)"
+        }
+      ],
+      "_name" : "USB31Bus",
+      "host_controller" : "AppleT8103USBXHCI"
+    },
+    {
+      "_items" : [
+        {
+          "_name" : "RTL9210B-CG",
+          "bcd_device" : "20.01",
+          "bus_power" : "900",
+          "bus_power_used" : "896",
+          "device_speed" : "super_speed_plus",
+          "extra_current_used" : "0",
+          "location_id" : "0x00200000 / 1",
+          "manufacturer" : "Realtek",
+          "Media" : [
+            {
+              "_name" : "RTL9210B-CG",
+              "bsd_name" : "disk4",
+              "Logical Unit" : 0,
+              "partition_map_type" : "guid_partition_map_type",
+              "removable_media" : "no",
+              "size" : "2.05 TB",
+              "size_in_bytes" : 2048408248320,
+              "smart_status" : "Verified",
+              "USB Interface" : 0,
+              "volumes" : [
+                {
+                  "_name" : "EFI",
+                  "bsd_name" : "disk4s1",
+                  "file_system" : "MS-DOS FAT32",
+                  "iocontent" : "EFI",
+                  "size" : "209.7 MB",
+                  "size_in_bytes" : 209715200,
+                  "volume_uuid" : "0E239BC6-F960-3107-89CF-1C97F78BB46B"
+                },
+                {
+                  "_name" : "disk4s2",
+                  "bsd_name" : "disk4s2",
+                  "iocontent" : "Apple_APFS",
+                  "size" : "1 TB",
+                  "size_in_bytes" : 1000000000000
+                },
+                {
+                  "_name" : "disk4s3",
+                  "bsd_name" : "disk4s3",
+                  "iocontent" : "Apple_APFS",
+                  "size" : "524.1 GB",
+                  "size_in_bytes" : 524099244032
+                },
+                {
+                  "_name" : "disk4s4",
+                  "bsd_name" : "disk4s4",
+                  "iocontent" : "Apple_APFS",
+                  "size" : "524.1 GB",
+                  "size_in_bytes" : 524099248128
+                }
+              ]
+            }
+          ],
+          "product_id" : "0x9210",
+          "serial_num" : "012345678906",
+          "vendor_id" : "0x0bda  (Realtek Semiconductor Corp.)"
+        }
+      ],
+      "_name" : "USB31Bus",
+      "host_controller" : "AppleT8103USBXHCI"
+    },
+    {
+      "_items" : [
+        {
+          "_name" : "Expansion",
+          "bcd_device" : "1.00",
+          "bus_power" : "900",
+          "bus_power_used" : "144",
+          "device_speed" : "super_speed",
+          "extra_current_used" : "0",
+          "location_id" : "0x02500000 / 1",
+          "manufacturer" : "Seagate",
+          "Media" : [
+            {
+              "_name" : "Expansion",
+              "bsd_name" : "disk6",
+              "Logical Unit" : 0,
+              "partition_map_type" : "guid_partition_map_type",
+              "removable_media" : "no",
+              "size" : "1.5 TB",
+              "size_in_bytes" : 1500301909504,
+              "smart_status" : "Verified",
+              "USB Interface" : 0,
+              "volumes" : [
+                {
+                  "_name" : "EFI",
+                  "bsd_name" : "disk6s1",
+                  "file_system" : "MS-DOS FAT32",
+                  "iocontent" : "EFI",
+                  "size" : "209.7 MB",
+                  "size_in_bytes" : 209715200,
+                  "volume_uuid" : "0E239BC6-F960-3107-89CF-1C97F78BB46B"
+                },
+                {
+                  "_name" : "1.5T",
+                  "bsd_name" : "disk6s2",
+                  "file_system" : "ExFAT",
+                  "free_space" : "1.48 TB",
+                  "free_space_in_bytes" : 1477200969728,
+                  "iocontent" : "Microsoft Basic Data",
+                  "mount_point" : "/Volumes/1.5T",
+                  "size" : "1.5 TB",
+                  "size_in_bytes" : 1500090728448,
+                  "volume_uuid" : "AC4BA4C2-9C60-3783-AF8E-BB8E626C95D6",
+                  "writable" : "yes"
+                }
+              ]
+            }
+          ],
+          "product_id" : "0x2321",
+          "serial_num" : "NA49H6GV",
+          "vendor_id" : "0x0bc2  (Seagate LLC)"
+        },
+        {
+          "_name" : "AB13X USB Audio",
+          "bcd_device" : "1.00",
+          "bus_power" : "500",
+          "bus_power_used" : "100",
+          "device_speed" : "full_speed",
+          "extra_current_used" : "0",
+          "location_id" : "0x02200000 / 3",
+          "manufacturer" : "Generic",
+          "product_id" : "0x0b21",
+          "serial_num" : "20210726905926",
+          "vendor_id" : "0x001f"
+        }
+      ],
+      "_name" : "USB30Bus",
+      "host_controller" : "AppleEmbeddedUSBXHCIFL1100",
+      "pci_device" : "0x1100 ",
+      "pci_revision" : "0x0010 ",
+      "pci_vendor" : "0x1b73 "
+    }
+  ]
+}
