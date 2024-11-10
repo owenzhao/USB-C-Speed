@@ -23,8 +23,8 @@ struct USBDataView: View {
           }
         }
       }
-      .padding()
     }
+    .padding()
   }
 }
 
@@ -71,17 +71,19 @@ struct USBDeviceView: View {
         if let serialNum = device.serialNum {
           Text("Serial Number: \(serialNum)")
         }
+
+        /* 不显示 MediaView
         if let media = device.media {
           ForEach(media, id: \.name) { mediaItem in
             MediaView(media: mediaItem)
           }
         }
+         */
       }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding(.leading, 20)
     } label: {
       Text(device.name)
-//        .onTapGesture { // 添加这个手势识别器
-//          isExpanded.toggle()
-//        }
     }
   }
 
@@ -89,19 +91,19 @@ struct USBDeviceView: View {
   func getDeviceSpeedString(_ speed: String) -> String {
     switch speed.lowercased() {
     case "low_speed":
-      return "1.5 Mbit/s (USB 1.0 低速)"
+      return "1.5 Mbit/s (USB 1.0 low speed)"
     case "full_speed":
-      return "12 Mbit/s (USB 1.1 全速)"
+      return "12 Mbit/s (USB 1.1 full speed)"
     case "high_speed":
-      return "480 Mbit/s (USB 2.0 高速)"
+      return "480 Mbit/s (USB 2.0 high speed)"
     case "super_speed":
-      return "5 Gbit/s (USB 3.0 超速)"
+      return "5 Gbit/s (USB 3.0 super speed)"
     case "super_speed_plus":
-      return "10 Gbit/s (USB 3.1 超高速)"
+      return "10 Gbit/s (USB 3.1 super speed plus)"
     case "super_speed_plus_20":
-      return "20 Gbit/s (USB 3.2 超高速+)"
+      return "20 Gbit/s (USB 3.2 super speed plus 20)"
     default:
-      return "\(speed) (未知速度)"
+      return "\(speed) (unkown)"
     }
   }
 }
@@ -126,11 +128,10 @@ struct MediaView: View {
           VolumeView(volume: volume)
         }
       }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding(.leading, 20)
     } label: {
       Text(media.name)
-//        .onTapGesture { // 添加这个手势识别器
-//          isExpanded.toggle()
-//        }
     }
   }
 }

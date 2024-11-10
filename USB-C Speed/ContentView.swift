@@ -17,7 +17,6 @@ struct ContentView: View {
   var body: some View {
     if let usbData {
       USBDataView(usbData: usbData)
-        .padding()
     } else {
       VStack {
         Image(systemName: "globe")
