@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ServiceManagement
 
 @main
 struct USB_C_SpeedApp: App {
@@ -24,10 +25,12 @@ struct USB_C_SpeedApp: App {
           do {
             let usbData = try decoder.decode(USBData.self, from: jsonData)
             self.usbData = usbData
-            print(usbData)
           } catch {
             print(error)
           }
+        }
+        .onAppear {
+          registerLogin()
         }
     }
 
@@ -52,6 +55,35 @@ struct USB_C_SpeedApp: App {
       return String(data: data, encoding: .utf8) ?? ""
     } catch {
       return "Error: \(error.localizedDescription)"
+    }
+  }
+
+  func registerLogin() {
+    // 将应用程序添加到登录项
+    let appService = SMAppService.mainApp
+
+    switch appService.status {
+    case .notRegistered:
+      register()
+    case .enabled:
+      print("The app is already in login items.")
+    case .requiresApproval:
+      // 用户需要手动添加应用程序到登录项
+      SMAppService.openSystemSettingsLoginItems()
+      break
+    case .notFound:
+      register()
+    @unknown default:
+      fatalError()
+    }
+  }
+
+  func register() {
+    do {
+      try appService.register()
+      print("register")
+    } catch {
+      print("Error: \(error.localizedDescription)")
     }
   }
 }

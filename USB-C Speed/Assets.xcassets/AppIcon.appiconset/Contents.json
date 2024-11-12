@@ -1,51 +1,61 @@
 {
   "images" : [
     {
+      "filename" : "圆角-HEIF ImageMacMicro_16pt.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "16x16"
     },
     {
+      "filename" : "圆角-HEIF ImageMacMicro_16pt@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
+      "filename" : "圆角-HEIF ImageMacSmall_32pt.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"
     },
     {
+      "filename" : "圆角-HEIF ImageMacSmall_32pt@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
+      "filename" : "圆角-HEIF ImageMacMedium_128pt.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
+      "filename" : "圆角-HEIF ImageMacMedium_128pt@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
+      "filename" : "圆角-HEIF ImageMacLarge_256pt.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
+      "filename" : "圆角-HEIF ImageMacLarge_256pt@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
+      "filename" : "圆角-HEIF ImageMacHuge_512pt.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
+      "filename" : "圆角-HEIF ImageMacHuge_512pt@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
