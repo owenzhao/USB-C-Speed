@@ -80,13 +80,11 @@ struct USBDeviceView: View {
           }
         }
 
-        /* 不显示 MediaView
         if let media = device.media {
           ForEach(media, id: \.name) { mediaItem in
             MediaView(media: mediaItem)
           }
         }
-         */
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .padding(.leading, 20)
