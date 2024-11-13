@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ServiceManagement
-//import UserNotifications
 
 @main
 struct USB_C_SpeedApp: App {

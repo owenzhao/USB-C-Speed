@@ -1,5 +1,5 @@
 //
-//   USBMonitor.swift
+//  USBMonitor.swift
 //  USB-C Speed
 //
 //  Created by zhaoxin on 2024-11-13.
@@ -207,5 +207,3 @@ class USBMonitor: ObservableObject {
     }
   }
 }
-
-// 文件结束。没有额外的代码。

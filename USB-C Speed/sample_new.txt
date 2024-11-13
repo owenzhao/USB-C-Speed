@@ -11,12 +11,12 @@
               "bus_power_used" : "0",
               "device_speed" : "super_speed_plus",
               "extra_current_used" : "0",
-              "location_id" : "0x01210000 / 3",
+              "location_id" : "0x01210000 / 4",
               "manufacturer" : "HIKSEMI",
               "Media" : [
                 {
                   "_name" : "MD202",
-                  "bsd_name" : "disk9",
+                  "bsd_name" : "disk11",
                   "Logical Unit" : 0,
                   "partition_map_type" : "guid_partition_map_type",
                   "removable_media" : "no",
@@ -27,7 +27,7 @@
                   "volumes" : [
                     {
                       "_name" : "EFI",
-                      "bsd_name" : "disk9s1",
+                      "bsd_name" : "disk11s1",
                       "file_system" : "MS-DOS FAT32",
                       "iocontent" : "EFI",
                       "size" : "209.7 MB",
@@ -35,8 +35,8 @@
                       "volume_uuid" : "0E239BC6-F960-3107-89CF-1C97F78BB46B"
                     },
                     {
-                      "_name" : "disk9s2",
-                      "bsd_name" : "disk9s2",
+                      "_name" : "disk11s2",
+                      "bsd_name" : "disk11s2",
                       "iocontent" : "Apple_APFS",
                       "size" : "1.02 TB",
                       "size_in_bytes" : 1023999787008
@@ -69,7 +69,7 @@
               "bus_power_used" : "98",
               "device_speed" : "full_speed",
               "extra_current_used" : "0",
-              "location_id" : "0x01120000 / 4",
+              "location_id" : "0x01120000 / 3",
               "manufacturer" : "Logitech",
               "product_id" : "0xc53f",
               "vendor_id" : "0x046d  (Logitech Inc.)"
@@ -91,66 +91,6 @@
       "host_controller" : "AppleT8103USBXHCI"
     },
     {
-      "_items" : [
-        {
-          "_name" : "RTL9210B-CG",
-          "bcd_device" : "20.01",
-          "bus_power" : "900",
-          "bus_power_used" : "896",
-          "device_speed" : "super_speed_plus",
-          "extra_current_used" : "0",
-          "location_id" : "0x00200000 / 1",
-          "manufacturer" : "Realtek",
-          "Media" : [
-            {
-              "_name" : "RTL9210B-CG",
-              "bsd_name" : "disk4",
-              "Logical Unit" : 0,
-              "partition_map_type" : "guid_partition_map_type",
-              "removable_media" : "no",
-              "size" : "2.05 TB",
-              "size_in_bytes" : 2048408248320,
-              "smart_status" : "Verified",
-              "USB Interface" : 0,
-              "volumes" : [
-                {
-                  "_name" : "EFI",
-                  "bsd_name" : "disk4s1",
-                  "file_system" : "MS-DOS FAT32",
-                  "iocontent" : "EFI",
-                  "size" : "209.7 MB",
-                  "size_in_bytes" : 209715200,
-                  "volume_uuid" : "0E239BC6-F960-3107-89CF-1C97F78BB46B"
-                },
-                {
-                  "_name" : "disk4s2",
-                  "bsd_name" : "disk4s2",
-                  "iocontent" : "Apple_APFS",
-                  "size" : "1 TB",
-                  "size_in_bytes" : 1000000000000
-                },
-                {
-                  "_name" : "disk4s3",
-                  "bsd_name" : "disk4s3",
-                  "iocontent" : "Apple_APFS",
-                  "size" : "524.1 GB",
-                  "size_in_bytes" : 524099244032
-                },
-                {
-                  "_name" : "disk4s4",
-                  "bsd_name" : "disk4s4",
-                  "iocontent" : "Apple_APFS",
-                  "size" : "524.1 GB",
-                  "size_in_bytes" : 524099248128
-                }
-              ]
-            }
-          ],
-          "product_id" : "0x9210",
-          "serial_num" : "012345678906",
-          "vendor_id" : "0x0bda  (Realtek Semiconductor Corp.)"
-        }
-      ],
       "_name" : "USB31Bus",
       "host_controller" : "AppleT8103USBXHCI"
     },
@@ -213,7 +153,7 @@
           "bus_power_used" : "100",
           "device_speed" : "full_speed",
           "extra_current_used" : "0",
-          "location_id" : "0x02200000 / 3",
+          "location_id" : "0x02200000 / 2",
           "manufacturer" : "Generic",
           "product_id" : "0x0b21",
           "serial_num" : "20210726905926",
