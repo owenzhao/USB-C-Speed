@@ -9,10 +9,10 @@ import Foundation
 import UserNotifications
 
 class USBMonitor: ObservableObject {
-  @Published var usbData: USBData = USBData(spusbDataType: [])
+  @Published var usbData: USBData = USBData(spusbDataType: [], spThunderboltDataType: [])
   private let usbNotificationCenter = USBNotificationCenter()
 
-  // 添加设备速度转换函数
+  // 添加设备速度转换函数，添加对于雷电接口速度的支持
   static func getDeviceSpeedString(_ speed: String) -> String {
     switch speed.lowercased() {
     case "low_speed":
@@ -35,24 +35,40 @@ class USBMonitor: ObservableObject {
   init() {
     // 初始化时设置通知观察者
     setupNotificationObservers()
-    // 初始加载USB数据
+    // 初始加载USB和雷电数据
     loadUSBData()
   }
 
   private func setupNotificationObservers() {
     NotificationCenter.default.addObserver(self, selector: #selector(handleUSBDeviceAdded), name: USBNotificationCenter.usbDeviceAddedNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(handleUSBDeviceRemoved), name: USBNotificationCenter.usbDeviceRemovedNotification, object: nil)
+    // 添加雷电设备通知观察者
+    NotificationCenter.default.addObserver(self, selector: #selector(handleThunderboltDeviceAdded), name: USBNotificationCenter.thunderboltDeviceAddedNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(handleThunderboltDeviceRemoved), name: USBNotificationCenter.thunderboltDeviceRemovedNotification, object: nil)
   }
 
   @objc private func handleUSBDeviceAdded() {
     Task { @MainActor in
-      await updateUSBDevice()
+      await updateDevices()
     }
   }
 
   @objc private func handleUSBDeviceRemoved() {
     Task { @MainActor in
-      await updateUSBDevice()
+      await updateDevices()
+    }
+  }
+
+  // 添加雷电设备处理方法
+  @objc private func handleThunderboltDeviceAdded() {
+    Task { @MainActor in
+      await updateDevices()
+    }
+  }
+
+  @objc private func handleThunderboltDeviceRemoved() {
+    Task { @MainActor in
+      await updateDevices()
     }
   }
 
@@ -60,15 +76,15 @@ class USBMonitor: ObservableObject {
     do {
       self.usbData = try getUSBData()
     } catch {
-      print("加载 USB 数据时出错：\(error)")
+      print("加载 USB 和雷电数据时出错：\(error)")
     }
   }
 
-  // 通过system_profiler SPUSBDataType读取USB设备信息
+  // 通过system_profiler同时读取USB设备和雷电设备信息
   private func listUSBDevices() -> String {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/sbin/system_profiler")
-    task.arguments = ["SPUSBDataType", "-json"]
+    task.arguments = ["SPUSBDataType", "SPThunderboltDataType", "-json"]
     let pipe = Pipe()
     task.standardOutput = pipe
 
@@ -89,15 +105,15 @@ class USBMonitor: ObservableObject {
   }
 
   // 对比新、旧两个USBData，看是添加了设备还是移除了设备，然后返回结果
-  private func compareUSBData(newData: USBData, oldData: USBData) -> (USBDeviceChangeState, [USBDevice]) {
-    let newDevices = getAllUSBDevices(in: newData)
-    let oldDevices = getAllUSBDevices(in: oldData)
+  private func compareUSBData(newData: USBData, oldData: USBData) -> (DeviceChangeState, [Device]) {
+    let newDevices = getAllDevices(in: newData)
+    let oldDevices = getAllDevices(in: oldData)
 
     let addedDevices = newDevices.filter { newDevice in
-      !oldDevices.contains { $0.serialNum == newDevice.serialNum }
+      !oldDevices.contains { $0.id == newDevice.id }
     }
     let removedDevices = oldDevices.filter { oldDevice in
-      !newDevices.contains { $0.serialNum == oldDevice.serialNum }
+      !newDevices.contains { $0.id == oldDevice.id }
     }
 
     if !addedDevices.isEmpty {
@@ -109,34 +125,29 @@ class USBMonitor: ObservableObject {
     }
   }
 
-  // 获取usbData的所有USBDevices
-  private func getAllUSBDevices(in usbData: USBData) -> [USBDevice] {
-    var usbDevices = [USBDevice]()
+  // 获取usbData的所有Devices（包括USB和雷电设备）
+  private func getAllDevices(in usbData: USBData) -> [Device] {
+    var devices = [Device]()
     for spusbDataType in usbData.spusbDataType {
-      for item in spusbDataType.items {
-        usbDevices.append(contentsOf: getAllUSBDevices(in: item))
+      if let items = spusbDataType.items {
+        // 修改这里，将USB设备转换为Device对象
+        devices.append(contentsOf: items.map { Device(usbDevice: $0) })
       }
     }
-    return usbDevices
-  }
-
-  private func getAllUSBDevices(in usbDevice: USBDevice) -> [USBDevice] {
-    var usbDevices = [USBDevice]()
-    usbDevices.append(usbDevice)
-    if let items = usbDevice.items {
-      for item in items {
-        usbDevices.append(contentsOf: getAllUSBDevices(in: item))
+    for spThunderboltDataType in usbData.spThunderboltDataType {
+      if let items = spThunderboltDataType.items {
+        devices.append(contentsOf: items.map { Device(thunderboltDevice: $0) })
       }
     }
-    return usbDevices
+    return devices
   }
 
   // 将结构体转化为文本输出
-  private func getString(for changes: (USBDeviceChangeState, [USBDevice])) -> String {
+  private func getString(for changes: (DeviceChangeState, [Device])) -> String {
     var deviceInfos = "\n"
 
-    for usbDevice in changes.1 {
-      deviceInfos += getDeviceInfo(for: usbDevice) + "\n"
+    for device in changes.1 {
+      deviceInfos += getDeviceInfo(for: device) + "\n"
     }
 
     switch changes.0 {
@@ -149,19 +160,19 @@ class USBMonitor: ObservableObject {
     }
   }
 
-  // 将USBDevice简化输出，只输出name和deviceSpeed
-  private func getDeviceInfo(for device: USBDevice) -> String {
-    return "\(device.name)：\(USBMonitor.getDeviceSpeedString(device.deviceSpeed))"
+  // 将Device简化输出，只输出name和speed
+  private func getDeviceInfo(for device: Device) -> String {
+    return "\(device.name)：\(device.speed)"
   }
 
-  enum USBDeviceChangeState {
+  enum DeviceChangeState {
     case addDevice
     case removeDevice
     case noChange
   }
 
   @MainActor
-  func updateUSBDevice() async {
+  func updateDevices() async {
     do {
       let oldData = self.usbData
       self.usbData = try getUSBData()
@@ -169,7 +180,7 @@ class USBMonitor: ObservableObject {
       let message = getString(for: (state, devices))
       try await sendNotification(message: message)
     } catch {
-      print("更新 USB 设备时出错：\(error)")
+      print("更新设备时出错：\(error)")
     }
   }
 
@@ -205,5 +216,23 @@ class USBMonitor: ObservableObject {
     } catch {
       print("发送通知时出错：\(error.localizedDescription)")
     }
+  }
+}
+
+struct Device: Identifiable {
+  let id: String
+  let name: String
+  let speed: String
+
+  init(usbDevice: USBDevice) {
+    self.id = usbDevice.serialNum ?? UUID().uuidString
+    self.name = usbDevice.name
+    self.speed = USBMonitor.getDeviceSpeedString(usbDevice.deviceSpeed)
+  }
+
+  init(thunderboltDevice: ThunderboltDevice) {
+    self.id = thunderboltDevice.deviceIdKey ?? UUID().uuidString
+    self.name = thunderboltDevice.name
+    self.speed = thunderboltDevice.modeKey ?? "未知"
   }
 }

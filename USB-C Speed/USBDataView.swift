@@ -22,6 +22,14 @@ struct USBDataView: View {
             SPUSBDataTypeView(dataType: dataType)
           }
         }
+        // 添加这里以处理雷电数据类型
+        ForEach(Array(zip(usbData.spThunderboltDataType.indices, usbData.spThunderboltDataType)), id: \.0) { index, dataType in
+          VStack(alignment: .leading) {
+            Text(dataType.name)
+              .font(.headline)
+            SPThunderboltDataTypeView(dataType: dataType)
+          }
+        }
       }
     }
     .padding()
@@ -34,18 +42,57 @@ struct SPUSBDataTypeView: View {
 
   var body: some View {
     VStack(alignment: .leading) {
-      Text("Host Controller: \(dataType.hostController)")
+      Text("主控制器: \(dataType.hostController ?? "未知")")
       if let pciDevice = dataType.pciDevice {
-        Text("PCI Device: \(pciDevice)")
+        Text("PCI设备: \(pciDevice)")
       }
       if let pciRevision = dataType.pciRevision {
-        Text("PCI Revision: \(pciRevision)")
+        Text("PCI修订版: \(pciRevision)")
       }
       if let pciVendor = dataType.pciVendor {
-        Text("PCI Vendor: \(pciVendor)")
+        Text("PCI供应商: \(pciVendor)")
       }
-      ForEach(dataType.items, id: \.name) { device in
-        USBDeviceView(device: device)
+      // 修改这里以处理items可能为nil的情况
+      if let items = dataType.items {
+        ForEach(items, id: \.name) { device in
+          USBDeviceView(device: device)
+        }
+      } else {
+        Text("无设备")
+      }
+    }
+  }
+}
+
+// MARK: - SPThunderboltDataTypeView
+struct SPThunderboltDataTypeView: View {
+  let dataType: SPThunderboltDataType
+
+  var body: some View {
+    VStack(alignment: .leading) {
+      // 移除主控制器，因为SPThunderboltDataType没有这个属性
+      Text("设备名称: \(dataType.deviceNameKey)")
+      Text("域UUID: \(dataType.domainUuidKey)")
+      Text("路由字符串: \(dataType.routeStringKey)")
+      Text("交换机UID: \(dataType.switchUidKey)")
+      Text("供应商名称: \(dataType.vendorNameKey)")
+
+      // 显示接口信息
+      if let receptacle = dataType.receptacle1Tag {
+        Text("接口信息:")
+        Text("  当前速度: \(receptacle.currentSpeedKey)")
+        Text("  链接状态: \(receptacle.linkStatusKey)")
+        Text("  接口ID: \(receptacle.receptacleIdKey)")
+        Text("  接口状态: \(receptacle.receptacleStatusKey)")
+      }
+
+      // 修改这里以处理items可能为nil的情况
+      if let items = dataType.items {
+        ForEach(items, id: \.name) { device in
+          ThunderboltDeviceView(device: device)
+        }
+      } else {
+        Text("无设备")
       }
     }
   }
@@ -59,17 +106,17 @@ struct USBDeviceView: View {
   var body: some View {
     DisclosureGroup(isExpanded: $isExpanded) {
       VStack(alignment: .leading) {
-        Text("BCD Device: \(device.bcdDevice)")
-        Text("Bus Power: \(device.busPower)mA")
-        Text("Bus Power Used: \(device.busPowerUsed)mA")
-        Text("Device Speed: \(USBMonitor.getDeviceSpeedString(device.deviceSpeed))")
-        Text("Extra Current Used: \(device.extraCurrentUsed)mA")
-        Text("Location ID: \(device.locationID)")
-        Text("Manufacturer: \(device.manufacturer)")
-        Text("Product ID: \(device.productID)")
-        Text("Vendor ID: \(device.vendorID)")
+        Text("BCD设备: \(device.bcdDevice ?? "未知")")
+        Text("总线功率: \(device.busPower ?? "未知")mA")
+        Text("已用总线功率: \(device.busPowerUsed ?? "未知")mA")
+        Text("设备速度: \(USBMonitor.getDeviceSpeedString(device.deviceSpeed))")
+        Text("额外使用电流: \(device.extraCurrentUsed ?? "未知")mA")
+        Text("位置ID: \(device.locationID ?? "未知")")
+        Text("制造商: \(device.manufacturer ?? "未知")")
+        Text("产品ID: \(device.productID ?? "未知")")
+        Text("供应商ID: \(device.vendorID ?? "未知")")
         if let serialNum = device.serialNum {
-          Text("Serial Number: \(serialNum)")
+          Text("序列号: \(serialNum)")
         }
 
         // 添加这里以处理嵌套的设备
@@ -94,6 +141,48 @@ struct USBDeviceView: View {
   }
 }
 
+// MARK: - ThunderboltDeviceView
+struct ThunderboltDeviceView: View {
+  let device: ThunderboltDevice
+  @State private var isExpanded = false
+
+  var body: some View {
+    DisclosureGroup(isExpanded: $isExpanded) {
+      VStack(alignment: .leading) {
+        Text("设备ID: \(device.deviceIdKey ?? "未知")")
+        Text("设备名称: \(device.deviceNameKey ?? "未知")")
+        Text("设备版本: \(device.deviceRevisionKey ?? "未知")")
+        Text("模式: \(device.modeKey ?? "未知")")
+        Text("路由字符串: \(device.routeStringKey ?? "未知")")
+        Text("交换机UID: \(device.switchUidKey ?? "未知")")
+        Text("交换机版本: \(device.switchVersionKey ?? "未知")")
+        Text("供应商ID: \(device.vendorIdKey ?? "未知")")
+        Text("供应商名称: \(device.vendorNameKey ?? "未知")")
+
+        // 显示接口信息
+        if let receptacle = device.receptacleUpstreamAmbiguousTag {
+          Text("接口信息:")
+          Text("  当前速度: \(receptacle.currentSpeedKey)")
+          Text("  链接状态: \(receptacle.linkStatusKey)")
+          Text("  接口状态: \(receptacle.receptacleStatusKey)")
+        }
+
+        // 处理嵌套设备
+        if let items = device.items {
+          ForEach(items, id: \.name) { nestedDevice in
+            ThunderboltDeviceView(device: nestedDevice)
+              .padding(.leading, 20)
+          }
+        }
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding(.leading, 20)
+    } label: {
+      Text(device.name)
+    }
+  }
+}
+
 // MARK: - MediaView
 struct MediaView: View {
   let media: Media
@@ -102,16 +191,19 @@ struct MediaView: View {
   var body: some View {
     DisclosureGroup(isExpanded: $isExpanded) {
       VStack(alignment: .leading) {
-        Text("BSD Name: \(media.bsdName)")
-        Text("Logical Unit: \(media.logicalUnit)")
-        Text("Partition Map Type: \(media.partitionMapType)")
-        Text("Removable Media: \(media.removableMedia)")
-        Text("Size: \(media.size)")
-        Text("Size in Bytes: \(media.sizeInBytes)")
-        Text("Smart Status: \(media.smartStatus)")
-        Text("USB Interface: \(media.usbInterface)")
-        ForEach(media.volumes, id: \.name) { volume in
-          VolumeView(volume: volume)
+        Text("BSD名称: \(media.bsdName ?? "未知")")
+        Text("逻辑单元: \(media.logicalUnit ?? 0)")
+        Text("分区映射类型: \(media.partitionMapType ?? "未知")")
+        Text("可移除媒体: \(media.removableMedia ?? "未知")")
+        Text("大小: \(media.size ?? "未知")")
+        Text("字节大小: \(media.sizeInBytes ?? 0)")
+        Text("智能状态: \(media.smartStatus ?? "未知")")
+        Text("USB接口: \(media.usbInterface ?? 0)")
+        // 修改这里以处理可选的 volumes 数组
+        if let volumes = media.volumes {
+          ForEach(volumes, id: \.name) { volume in
+            VolumeView(volume: volume)
+          }
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -128,27 +220,27 @@ struct VolumeView: View {
 
   var body: some View {
     VStack(alignment: .leading) {
-      Text("BSD Name: \(volume.bsdName)")
+      Text("BSD名称: \(volume.bsdName ?? "未知")")
       if let fileSystem = volume.fileSystem {
-        Text("File System: \(fileSystem)")
+        Text("文件系统: \(fileSystem)")
       }
-      Text("IOContent: \(volume.iocontent)")
-      Text("Size: \(volume.size)")
-      Text("Size in Bytes: \(volume.sizeInBytes)")
+      Text("IO内容: \(volume.ioContent ?? "未知")")
+      Text("大小: \(volume.size ?? "未知")")
+      Text("字节大小: \(volume.sizeInBytes ?? 0)")
       if let volumeUUID = volume.volumeUUID {
-        Text("Volume UUID: \(volumeUUID)")
+        Text("卷UUID: \(volumeUUID)")
       }
       if let freeSpace = volume.freeSpace {
-        Text("Free Space: \(freeSpace)")
+        Text("可用空间: \(freeSpace)")
       }
       if let freeSpaceInBytes = volume.freeSpaceInBytes {
-        Text("Free Space in Bytes: \(freeSpaceInBytes)")
+        Text("可用空间字节数: \(freeSpaceInBytes)")
       }
       if let mountPoint = volume.mountPoint {
-        Text("Mount Point: \(mountPoint)")
+        Text("挂载点: \(mountPoint)")
       }
       if let writable = volume.writable {
-        Text("Writable: \(writable)")
+        Text("可写: \(writable)")
       }
     }
   }
@@ -158,7 +250,7 @@ struct VolumeView: View {
 struct USBDataView_Previews: PreviewProvider {
   static var previews: some View {
     // 创建一个示例 USBData 对象用于预览
-    let sampleUSBData = USBData(spusbDataType: [/* 在这里添加示例数据 */])
+    let sampleUSBData = USBData(spusbDataType: [/* 在这里添加USB示例数据 */], spThunderboltDataType: [/* 在这里添加雷电示例数据 */])
     USBDataView(usbData: sampleUSBData)
   }
 }

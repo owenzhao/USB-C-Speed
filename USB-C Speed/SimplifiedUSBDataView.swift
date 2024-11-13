@@ -15,11 +15,21 @@ struct SimplifiedUSBDataView: View {
     ScrollView {
       VStack(alignment: .leading, spacing: 20) {
         // 使用组合的唯一标识符
-        ForEach(Array(zip(usbData.spusbDataType.indices, usbData.spusbDataType)), id: \.0) { index, dataType in
+        // 修改这里以过滤掉无设备的spusbDataType
+        ForEach(Array(zip(usbData.spusbDataType.indices, usbData.spusbDataType)).filter { !($0.1.items?.isEmpty ?? true) }, id: \.0) { index, dataType in
           VStack(alignment: .leading) {
             Text(dataType.name)
               .font(.headline)
             SimplifiedSPUSBDataTypeView(dataType: dataType)
+          }
+        }
+        // 添加雷电设备支持
+        // 修改这里以过滤掉无设备的spThunderboltDataType
+        ForEach(Array(zip(usbData.spThunderboltDataType.indices, usbData.spThunderboltDataType)).filter { !($0.1.items?.isEmpty ?? true) }, id: \.0) { index, dataType in
+          VStack(alignment: .leading) {
+            Text(dataType.name)
+              .font(.headline)
+            SimplifiedSPThunderboltDataTypeView(dataType: dataType)
           }
         }
       }
@@ -34,8 +44,28 @@ struct SimplifiedSPUSBDataTypeView: View {
 
   var body: some View {
     // 仅显示设备列表，不显示属性信息
-    ForEach(dataType.items, id: \.name) { device in
-      SimplifiedUSBDeviceView(device: device)
+    if let items = dataType.items {
+      ForEach(items, id: \.name) { device in
+        SimplifiedUSBDeviceView(device: device)
+      }
+    } else {
+      Text("无设备")
+    }
+  }
+}
+
+// MARK: - SimplifiedSPThunderboltDataTypeView
+struct SimplifiedSPThunderboltDataTypeView: View {
+  let dataType: SPThunderboltDataType
+
+  var body: some View {
+    // 仅显示设备列表，不显示属性信息
+    if let items = dataType.items {
+      ForEach(items, id: \.name) { device in
+        SimplifiedThunderboltDeviceView(device: device)
+      }
+    } else {
+      Text("无设备")
     }
   }
 }
@@ -48,12 +78,12 @@ struct SimplifiedUSBDeviceView: View {
   var body: some View {
     DisclosureGroup(isExpanded: $isExpanded) {
       VStack(alignment: .leading) {
-        // 仅显示指定的属性
-        Text("总线电源: \(device.busPower)毫安")
-        Text("已使用总线电源: \(device.busPowerUsed)毫安")
+        // 仅显示指定的属性，并处理可选值
+        Text("总线电源: \(device.busPower ?? "未知")毫安")
+        Text("已使用总线电源: \(device.busPowerUsed ?? "未知")毫安")
         Text("设备速度: \(getDeviceSpeedString(device.deviceSpeed))")
-        Text("额外使用电流: \(device.extraCurrentUsed)毫安")
-        Text("制造商: \(device.manufacturer)")
+        Text("额外使用电流: \(device.extraCurrentUsed ?? "未知")毫安")
+        Text("制造商: \(device.manufacturer ?? "未知")")
 
         // 处理嵌套的设备
         if let items = device.items {
@@ -91,11 +121,48 @@ struct SimplifiedUSBDeviceView: View {
   }
 }
 
+// MARK: - SimplifiedThunderboltDeviceView
+struct SimplifiedThunderboltDeviceView: View {
+  let device: ThunderboltDevice
+  @State private var isExpanded = false
+
+  var body: some View {
+    DisclosureGroup(isExpanded: $isExpanded) {
+      VStack(alignment: .leading) {
+        // 仅显示指定的属性
+        Text("设备名称: \(device.deviceNameKey ?? "未知")")
+        Text("供应商名称: \(device.vendorNameKey ?? "未知")")
+        Text("模式: \(device.modeKey ?? "未知")")
+        // 显示receptacleUpstreamAmbiguousTag信息
+        if let receptacle = device.receptacleUpstreamAmbiguousTag {
+          Text("接口信息:")
+          Text("  当前速度: \(receptacle.currentSpeedKey)")
+          Text("  链接状态: \(receptacle.linkStatusKey)")
+          Text("  接口状态: \(receptacle.receptacleStatusKey)")
+        }
+
+        // 处理嵌套的设备
+        if let items = device.items {
+          ForEach(items, id: \.name) { nestedDevice in
+            SimplifiedThunderboltDeviceView(device: nestedDevice)
+              .padding(.leading, 20)
+          }
+        }
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding(.leading, 20)
+    } label: {
+      Text(device.name)
+    }
+  }
+}
+
 // MARK: - 预览 Provider
 struct SimplifiedUSBDataView_Previews: PreviewProvider {
   static var previews: some View {
     // 创建一个示例 USBData 对象用于预览
-    let sampleUSBData = USBData(spusbDataType: [/* 在这里添加示例数据 */])
+    // 修改这里以包含 spThunderboltDataType 参数
+    let sampleUSBData = USBData(spusbDataType: [/* 在这里添加USB示例数据 */], spThunderboltDataType: [/* 在这里添加雷电示例数据 */])
     SimplifiedUSBDataView(usbData: sampleUSBData)
   }
 }
