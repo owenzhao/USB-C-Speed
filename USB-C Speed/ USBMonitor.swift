@@ -12,6 +12,26 @@ class USBMonitor: ObservableObject {
   @Published var usbData: USBData = USBData(spusbDataType: [])
   private let usbNotificationCenter = USBNotificationCenter()
 
+  // 添加设备速度转换函数
+  static func getDeviceSpeedString(_ speed: String) -> String {
+    switch speed.lowercased() {
+    case "low_speed":
+      return "1.5 Mbit/s (USB 1.0 低速)"
+    case "full_speed":
+      return "12 Mbit/s (USB 1.1 全速)"
+    case "high_speed":
+      return "480 Mbit/s (USB 2.0 高速)"
+    case "super_speed":
+      return "5 Gbit/s (USB 3.0 超高速)"
+    case "super_speed_plus":
+      return "10 Gbit/s (USB 3.1 超高速+)"
+    case "super_speed_plus_20":
+      return "20 Gbit/s (USB 3.2 超高速+ 20)"
+    default:
+      return "\(speed) (未知)"
+    }
+  }
+
   init() {
     // 初始化时设置通知观察者
     setupNotificationObservers()
@@ -113,14 +133,25 @@ class USBMonitor: ObservableObject {
 
   // 将结构体转化为文本输出
   private func getString(for changes: (USBDeviceChangeState, [USBDevice])) -> String {
+    var deviceInfos = "\n"
+
+    for usbDevice in changes.1 {
+      deviceInfos += getDeviceInfo(for: usbDevice) + "\n"
+    }
+
     switch changes.0 {
     case .addDevice:
-      return "添加了设备：\(changes.1)"
+      return "添加了设备：\(deviceInfos)"
     case .removeDevice:
-      return "移除了设备：\(changes.1)"
+      return "移除了设备：\(deviceInfos)"
     case .noChange:
       return "没有变化"
     }
+  }
+
+  // 将USBDevice简化输出，只输出name和deviceSpeed
+  private func getDeviceInfo(for device: USBDevice) -> String {
+    return "\(device.name)：\(USBMonitor.getDeviceSpeedString(device.deviceSpeed))"
   }
 
   enum USBDeviceChangeState {

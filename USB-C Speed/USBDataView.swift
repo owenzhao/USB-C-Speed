@@ -62,7 +62,7 @@ struct USBDeviceView: View {
         Text("BCD Device: \(device.bcdDevice)")
         Text("Bus Power: \(device.busPower)mA")
         Text("Bus Power Used: \(device.busPowerUsed)mA")
-        Text("Device Speed: \(getDeviceSpeedString(device.deviceSpeed))")
+        Text("Device Speed: \(USBMonitor.getDeviceSpeedString(device.deviceSpeed))")
         Text("Extra Current Used: \(device.extraCurrentUsed)mA")
         Text("Location ID: \(device.locationID)")
         Text("Manufacturer: \(device.manufacturer)")
@@ -90,26 +90,6 @@ struct USBDeviceView: View {
       .padding(.leading, 20)
     } label: {
       Text(device.name)
-    }
-  }
-
-  // 添加这个函数来转换设备速度
-  func getDeviceSpeedString(_ speed: String) -> String {
-    switch speed.lowercased() {
-    case "low_speed":
-      return "1.5 Mbit/s (USB 1.0 low speed)"
-    case "full_speed":
-      return "12 Mbit/s (USB 1.1 full speed)"
-    case "high_speed":
-      return "480 Mbit/s (USB 2.0 high speed)"
-    case "super_speed":
-      return "5 Gbit/s (USB 3.0 super speed)"
-    case "super_speed_plus":
-      return "10 Gbit/s (USB 3.1 super speed plus)"
-    case "super_speed_plus_20":
-      return "20 Gbit/s (USB 3.2 super speed plus 20)"
-    default:
-      return "\(speed) (unkown)"
     }
   }
 }
@@ -182,5 +162,3 @@ struct USBDataView_Previews: PreviewProvider {
     USBDataView(usbData: sampleUSBData)
   }
 }
-
-// 文件结束。无其他代码。
