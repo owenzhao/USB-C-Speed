@@ -80,10 +80,12 @@ struct SPThunderboltDataTypeView: View {
       // 显示接口信息
       if let receptacle = dataType.receptacle1Tag {
         Text("接口信息:")
-        Text("  当前速度: \(receptacle.currentSpeedKey)")
+        Text("  当前速度: \(USBMonitor.getReadableSpeed(receptacle.currentSpeedKey))")
         Text("  链接状态: \(receptacle.linkStatusKey)")
-        Text("  接口ID: \(receptacle.receptacleIdKey)")
-        Text("  接口状态: \(receptacle.receptacleStatusKey)")
+        if let receptacleId = receptacle.receptacleIdKey {
+          Text("  接口ID: \(receptacleId)")
+        }
+        Text("  接口状态: \(USBMonitor.getReadableReceptacleStatus(receptacle.receptacleStatusKey))")
       }
 
       // 修改这里以处理items可能为nil的情况
@@ -152,7 +154,9 @@ struct ThunderboltDeviceView: View {
         Text("设备ID: \(device.deviceIdKey ?? "未知")")
         Text("设备名称: \(device.deviceNameKey ?? "未知")")
         Text("设备版本: \(device.deviceRevisionKey ?? "未知")")
-        Text("模式: \(device.modeKey ?? "未知")")
+        if let modeKey = device.modeKey {
+          Text("模式: \(USBMonitor.getReadableMode(modeKey))")
+        }
         Text("路由字符串: \(device.routeStringKey ?? "未知")")
         Text("交换机UID: \(device.switchUidKey ?? "未知")")
         Text("交换机版本: \(device.switchVersionKey ?? "未知")")
@@ -162,9 +166,9 @@ struct ThunderboltDeviceView: View {
         // 显示接口信息
         if let receptacle = device.receptacleUpstreamAmbiguousTag {
           Text("接口信息:")
-          Text("  当前速度: \(receptacle.currentSpeedKey)")
+          Text("  当前速度: \(USBMonitor.getReadableSpeed(receptacle.currentSpeedKey))")
           Text("  链接状态: \(receptacle.linkStatusKey)")
-          Text("  接口状态: \(receptacle.receptacleStatusKey)")
+          Text("  接口状态: \(USBMonitor.getReadableReceptacleStatus(receptacle.receptacleStatusKey))")
         }
 
         // 处理嵌套设备

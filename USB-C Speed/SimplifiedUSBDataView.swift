@@ -132,13 +132,15 @@ struct SimplifiedThunderboltDeviceView: View {
         // 仅显示指定的属性
         Text("设备名称: \(device.deviceNameKey ?? "未知")")
         Text("供应商名称: \(device.vendorNameKey ?? "未知")")
-        Text("模式: \(device.modeKey ?? "未知")")
+        if let modeKey = device.modeKey {
+          Text("模式: \(USBMonitor.getReadableMode(modeKey))")
+        }
         // 显示receptacleUpstreamAmbiguousTag信息
         if let receptacle = device.receptacleUpstreamAmbiguousTag {
           Text("接口信息:")
-          Text("  当前速度: \(receptacle.currentSpeedKey)")
+          Text("  当前速度: \(USBMonitor.getReadableSpeed(receptacle.currentSpeedKey))")
           Text("  链接状态: \(receptacle.linkStatusKey)")
-          Text("  接口状态: \(receptacle.receptacleStatusKey)")
+          Text("  接口状态: \(USBMonitor.getReadableReceptacleStatus(receptacle.receptacleStatusKey))")
         }
 
         // 处理嵌套的设备

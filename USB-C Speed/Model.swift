@@ -115,8 +115,7 @@ struct ThunderboltDevice: Codable {
 }
 
 // MARK: - USBDevice
-struct USBDevice: Codable, Identifiable {
-  let id = UUID()
+struct USBDevice: Codable {
   let name: String
   let deviceSpeed: String
   let manufacturer: String?
