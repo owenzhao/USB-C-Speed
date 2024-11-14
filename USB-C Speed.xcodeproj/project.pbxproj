@@ -10,33 +10,9 @@
 		DCF6538D2CE016FB0033CF66 /* USB-C Speed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "USB-C Speed.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		DC8993082CE47A810055CE81 /* Exceptions for "USB-C Speed" folder in "USB-C Speed" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				sample_new.txt,
-			);
-			target = DCF6538C2CE016FB0033CF66 /* USB-C Speed */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		DC8993092CE47A810055CE81 /* Exceptions for "USB-C Speed" folder in "Compile Sources" phase from "USB-C Speed" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = DCF653892CE016FB0033CF66 /* Sources */;
-			membershipExceptions = (
-				sample_new.txt,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DCF6538F2CE016FB0033CF66 /* USB-C Speed */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				DC8993082CE47A810055CE81 /* Exceptions for "USB-C Speed" folder in "USB-C Speed" target */,
-				DC8993092CE47A810055CE81 /* Exceptions for "USB-C Speed" folder in "Compile Sources" phase from "USB-C Speed" target */,
-			);
 			path = "USB-C Speed";
 			sourceTree = "<group>";
 		};
