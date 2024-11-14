@@ -13,60 +13,15 @@ class USBMonitor: ObservableObject {
   private let usbNotificationCenter = USBNotificationCenter()
 
   // 添加设备速度转换函数，添加对于雷电接口速度的支持
-  static func getDeviceSpeedString(_ speed: String) -> String {
-    switch speed.lowercased() {
-    case "low_speed":
-      return "1.5 Mbit/s (USB 1.0 低速)"
-    case "full_speed":
-      return "12 Mbit/s (USB 1.1 全速)"
-    case "high_speed":
-      return "480 Mbit/s (USB 2.0 高速)"
-    case "super_speed":
-      return "5 Gbit/s (USB 3.0 超高速)"
-    case "super_speed_plus":
-      return "10 Gbit/s (USB 3.1 超高速+)"
-    case "super_speed_plus_20":
-      return "20 Gbit/s (USB 3.2 超高速+ 20)"
-    default:
-      return "\(speed) (未知)"
-    }
-  }
 
   init() {
     // 初始化时设置通知观察者
-    setupNotificationObservers()
+    NotificationCenter.default.addObserver(self, selector: #selector(handleDeviceChanged), name: USBNotificationCenter.deviceChangeNotification, object: nil)
     // 初始加载USB和雷电数据
     loadUSBData()
   }
 
-  private func setupNotificationObservers() {
-    NotificationCenter.default.addObserver(self, selector: #selector(handleUSBDeviceAdded), name: USBNotificationCenter.usbDeviceAddedNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(handleUSBDeviceRemoved), name: USBNotificationCenter.usbDeviceRemovedNotification, object: nil)
-    // 添加雷电设备通知观察者
-    NotificationCenter.default.addObserver(self, selector: #selector(handleThunderboltDeviceAdded), name: USBNotificationCenter.thunderboltDeviceAddedNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(handleThunderboltDeviceRemoved), name: USBNotificationCenter.thunderboltDeviceRemovedNotification, object: nil)
-  }
-
-  @objc private func handleUSBDeviceAdded() {
-    Task { @MainActor in
-      await updateDevices()
-    }
-  }
-
-  @objc private func handleUSBDeviceRemoved() {
-    Task { @MainActor in
-      await updateDevices()
-    }
-  }
-
-  // 添加雷电设备处理方法
-  @objc private func handleThunderboltDeviceAdded() {
-    Task { @MainActor in
-      await updateDevices()
-    }
-  }
-
-  @objc private func handleThunderboltDeviceRemoved() {
+  @objc private func handleDeviceChanged() {
     Task { @MainActor in
       await updateDevices()
     }
@@ -106,8 +61,20 @@ class USBMonitor: ObservableObject {
 
   // 对比新、旧两个USBData，看是添加了设备还是移除了设备，然后返回结果
   private func compareUSBData(newData: USBData, oldData: USBData) -> (DeviceChangeState, [Device]) {
+    print("开始比较新旧 USB 数据")
     let newDevices = getAllDevices(in: newData)
     let oldDevices = getAllDevices(in: oldData)
+
+    print("新设备数量: \(newDevices.count)")
+    print("旧设备数量: \(oldDevices.count)")
+
+    // 打印全部新设备
+    print("新设备列表:")
+    newDevices.forEach { print("  - \($0.name): \($0.speed) (ID: \($0.id))") }
+
+    // 打印全部旧设备
+    print("旧设备列表:")
+    oldDevices.forEach { print("  - \($0.name): \($0.speed) (ID: \($0.id))") }
 
     let addedDevices = newDevices.filter { newDevice in
       !oldDevices.contains { $0.id == newDevice.id }
@@ -116,11 +83,19 @@ class USBMonitor: ObservableObject {
       !newDevices.contains { $0.id == oldDevice.id }
     }
 
+    print("添加的设备数量: \(addedDevices.count)")
+    print("移除的设备数量: \(removedDevices.count)")
+
     if !addedDevices.isEmpty {
+      print("检测到新增设备:")
+      addedDevices.forEach { print("  - \($0.name): \($0.speed) (ID: \($0.id))") }
       return (.addDevice, addedDevices)
     } else if !removedDevices.isEmpty {
+      print("检测到移除设备:")
+      removedDevices.forEach { print("  - \($0.name): \($0.speed) (ID: \($0.id))") }
       return (.removeDevice, removedDevices)
     } else {
+      print("没有检测到设备变化")
       return (.noChange, [])
     }
   }
@@ -131,12 +106,36 @@ class USBMonitor: ObservableObject {
     for spusbDataType in usbData.spusbDataType {
       if let items = spusbDataType.items {
         // 修改这里，将USB设备转换为Device对象
-        devices.append(contentsOf: items.map { Device(usbDevice: $0) })
+        let usbDevices = items.flatMap { getAllUSBDevices(from: $0) }
+        devices.append(contentsOf: usbDevices.map { Device(usbDevice: $0) })
       }
     }
     for spThunderboltDataType in usbData.spThunderboltDataType {
       if let items = spThunderboltDataType.items {
-        devices.append(contentsOf: items.map { Device(thunderboltDevice: $0) })
+        let thunderboltDevices = items.flatMap { getAllThunderboltDevices(from: $0) }
+        devices.append(contentsOf: thunderboltDevices.map { Device(thunderboltDevice: $0) })
+      }
+    }
+    return devices
+  }
+
+  // 从USBDevice里获取所有的USBDevice，因为它可能存在嵌套关系
+  private func getAllUSBDevices(from usbDevice: USBDevice) -> [USBDevice] {
+    var devices = [usbDevice]
+    if let items = usbDevice.items {
+      for item in items {
+        devices.append(contentsOf: getAllUSBDevices(from: item))
+      }
+    }
+    return devices
+  }
+
+  // 从ThunderboltDevice里获取所有的ThunderboltDevice，因为它可能存在嵌套关系
+  private func getAllThunderboltDevices(from thunderboltDevice: ThunderboltDevice) -> [ThunderboltDevice] {
+    var devices = [thunderboltDevice]
+    if let items = thunderboltDevice.items {
+      for item in items {
+        devices.append(contentsOf: getAllThunderboltDevices(from: item))
       }
     }
     return devices
@@ -177,6 +176,12 @@ class USBMonitor: ObservableObject {
       let oldData = self.usbData
       self.usbData = try getUSBData()
       let (state, devices) = compareUSBData(newData: self.usbData, oldData: oldData)
+
+      guard state != .noChange else {
+        print("没有设备变化")
+        return
+      }
+
       let message = getString(for: (state, devices))
       try await sendNotification(message: message)
     } catch {
@@ -201,7 +206,7 @@ class USBMonitor: ObservableObject {
     let center = UNUserNotificationCenter.current()
     let settings = await center.notificationSettings()
     guard (settings.authorizationStatus == .authorized) ||
-            (settings.authorizationStatus == .provisional) else {
+      (settings.authorizationStatus == .provisional) else {
       try await requestNotificationAuthorization(with: message)
       return
     }
@@ -219,13 +224,69 @@ class USBMonitor: ObservableObject {
   }
 }
 
+extension USBMonitor {
+  static func getDeviceSpeedString(_ speed: String) -> String {
+    switch speed.lowercased() {
+    case "low_speed":
+      return "1.5 Mbit/s (USB 1.0 低速)"
+    case "full_speed":
+      return "12 Mbit/s (USB 1.1 全速)"
+    case "high_speed":
+      return "480 Mbit/s (USB 2.0 高速)"
+    case "super_speed":
+      return "5 Gbit/s (USB 3.0 超高速)"
+    case "super_speed_plus":
+      return "10 Gbit/s (USB 3.1 超高速+)"
+    case "super_speed_plus_20":
+      return "20 Gbit/s (USB 3.2 超高速+ 20)"
+    default:
+      return "\(speed) (未知)"
+    }
+  }
+
+  static func getReadableReceptacleStatus(_ status: String) -> String {
+    switch status {
+    case "receptacle_connected":
+      return "已连接"
+    case "receptacle_no_devices_connected":
+      return "未连接"
+    default:
+      return status
+    }
+  }
+
+  static func getReadableSpeed(_ speed: String) -> String {
+    switch speed {
+    case "Up to 20 Gb/s":
+      return "最高20Gb/s"
+    case "Up to 40 Gb/s":
+      return "最高40Gb/s"
+    default:
+      return speed
+    }
+  }
+
+  static func getReadableMode(_ mode: String) -> String {
+    switch mode {
+    case "usb_four":
+      return "USB 4"
+    case "thunderbolt_three":
+      return "雷电 3"
+    case "thunderbolt_four":
+      return "雷电 4"
+    default:
+      return mode
+    }
+  }
+}
+
 struct Device: Identifiable {
   let id: String
   let name: String
   let speed: String
 
   init(usbDevice: USBDevice) {
-    self.id = usbDevice.serialNum ?? UUID().uuidString
+    self.id = usbDevice.locationID ?? UUID().uuidString
     self.name = usbDevice.name
     self.speed = USBMonitor.getDeviceSpeedString(usbDevice.deviceSpeed)
   }
@@ -233,6 +294,6 @@ struct Device: Identifiable {
   init(thunderboltDevice: ThunderboltDevice) {
     self.id = thunderboltDevice.deviceIdKey ?? UUID().uuidString
     self.name = thunderboltDevice.name
-    self.speed = thunderboltDevice.modeKey ?? "未知"
+    self.speed = USBMonitor.getReadableSpeed(thunderboltDevice.receptacleUpstreamAmbiguousTag?.currentSpeedKey ?? "未知")
   }
 }

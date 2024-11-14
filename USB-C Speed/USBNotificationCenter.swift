@@ -4,32 +4,31 @@
 //
 //  Created by zhaoxin on 2024-11-13.
 //
-
+//
 import Foundation
 import IOKit
 import IOKit.usb
+import IOKit.network
 
 // 通过IOKit获取USB设备和雷电设备插拔的通知，然后将其转发为普通的通知
 class USBNotificationCenter {
+  // 只保留一个通知端口
   private var notificationPort: IONotificationPortRef?
+  // 取消USB设备迭代器的注释
   private var usbAddedIterator: io_iterator_t = 0
   private var usbRemovedIterator: io_iterator_t = 0
   private var thunderboltAddedIterator: io_iterator_t = 0
   private var thunderboltRemovedIterator: io_iterator_t = 0
 
-  // 通知名称常量
-  static let usbDeviceAddedNotification = Notification.Name("USBDeviceAddedNotification")
-  static let usbDeviceRemovedNotification = Notification.Name("USBDeviceRemovedNotification")
-  static let thunderboltDeviceAddedNotification = Notification.Name("ThunderboltDeviceAddedNotification")
-  static let thunderboltDeviceRemovedNotification = Notification.Name("ThunderboltDeviceRemovedNotification")
+  // 只保留一个通知名称
+  static let deviceChangeNotification = Notification.Name("DeviceChangeNotification")
 
   init() {
     // 在初始化时调用注册函数
-    registerForUSBNotifications()
-    registerForThunderboltNotifications()
+    registerForDeviceNotifications()
   }
 
-  private func registerForUSBNotifications() {
+  private func registerForDeviceNotifications() {
     // 创建通知端口
     notificationPort = IONotificationPortCreate(kIOMainPortDefault)
     guard let notificationPort = notificationPort else {
@@ -37,100 +36,43 @@ class USBNotificationCenter {
       return
     }
 
-    // 获取运行循环源并添加到当前运行循环
+    // 获取运行循环源并添加到主运行循环
     let runLoopSource = IONotificationPortGetRunLoopSource(notificationPort).takeRetainedValue()
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .defaultMode)
+    CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, .defaultMode)
 
-    // 创建匹配字典以匹配 USB 设备
-    let matchingDict = IOServiceMatching(kIOUSBDeviceClassName)
+    // 取消USB设备通知注册的注释
+    registerNotification(for: kIOUSBDeviceClassName, added: &usbAddedIterator, removed: &usbRemovedIterator)
 
-    // 定义 USB 设备添加回调
-    let addCallback: IOServiceMatchingCallback = { (_, iterator) in
-      print("USB设备已添加")
-      // 只处理第一个设备
-      let object = IOIteratorNext(iterator)
-      if object != IO_OBJECT_NULL {
-        // 发送添加设备的通知
-        NotificationCenter.default.post(name: USBNotificationCenter.usbDeviceAddedNotification, object: nil)
-        IOObjectRelease(object)
-      } else {
-        NotificationCenter.default.post(name: USBNotificationCenter.usbDeviceRemovedNotification, object: nil)
-      }
-      // 清空剩余的迭代器
-      while IOIteratorNext(iterator) != IO_OBJECT_NULL { }
-    }
-
-    // 定义 USB 设备移除回调
-    let removeCallback: IOServiceMatchingCallback = { (_, iterator) in
-      print("USB设备已移除")
-      // 只处理第一个设备
-      let object = IOIteratorNext(iterator)
-      if object != IO_OBJECT_NULL {
-        // 发送移除设备的通知
-        NotificationCenter.default.post(name: USBNotificationCenter.usbDeviceRemovedNotification, object: nil)
-        IOObjectRelease(object)
-      } else {
-        NotificationCenter.default.post(name: USBNotificationCenter.usbDeviceRemovedNotification, object: nil)
-      }
-      // 清空剩余的迭代器
-      while IOIteratorNext(iterator) != IO_OBJECT_NULL { }
-    }
-
-    // 注册 USB 设备添加和移除通知
-    IOServiceAddMatchingNotification(notificationPort, kIOFirstMatchNotification, matchingDict, addCallback, nil, &usbAddedIterator)
-    IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, removeCallback, nil, &usbRemovedIterator)
-
-    // 遍历现有设备以激活通知
-    addCallback(nil, usbAddedIterator)
-    removeCallback(nil, usbRemovedIterator)
+    // 注册雷电设备通知
+    registerNotification(for: "IOPCIDevice", added: &thunderboltAddedIterator, removed: &thunderboltRemovedIterator)
   }
 
-  private func registerForThunderboltNotifications() {
-    // 创建通知端口（如果尚未创建）
-    if notificationPort == nil {
-      notificationPort = IONotificationPortCreate(kIOMainPortDefault)
-      guard let notificationPort = notificationPort else {
-        print("创建通知端口失败")
-        return
-      }
-      // 获取运行循环源并添加到当前运行循环
-      let runLoopSource = IONotificationPortGetRunLoopSource(notificationPort).takeRetainedValue()
-      CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .defaultMode)
-    }
+  private func registerNotification(for className: String, added: UnsafeMutablePointer<io_iterator_t>, removed: UnsafeMutablePointer<io_iterator_t>) {
+    let matchingDict = IOServiceMatching(className)
 
-    // 创建匹配字典以匹配雷电设备
-    let matchingDict = IOServiceMatching("AppleThunderboltHALType")
-
-    // 定义雷电设备添加回调
+    // 使用一个包装函数来处理设备添加
     let addCallback: IOServiceMatchingCallback = { (_, iterator) in
-      print("雷电设备已添加")
-      let object = IOIteratorNext(iterator)
-      if object != IO_OBJECT_NULL {
-        NotificationCenter.default.post(name: USBNotificationCenter.thunderboltDeviceAddedNotification, object: nil)
-        IOObjectRelease(object)
-      }
+      // 只发送一次通知
+      print("设备添加")
+      NotificationCenter.default.post(name: USBNotificationCenter.deviceChangeNotification, object: nil)
+      // 清空迭代器
       while IOIteratorNext(iterator) != IO_OBJECT_NULL { }
     }
 
-    // 定义雷电设备移除回调
+    // 使用一个包装函数来处理设备移除
     let removeCallback: IOServiceMatchingCallback = { (_, iterator) in
-      print("雷电设备已移除")
-      let object = IOIteratorNext(iterator)
-      if object != IO_OBJECT_NULL {
-        NotificationCenter.default.post(name: USBNotificationCenter.thunderboltDeviceRemovedNotification, object: nil)
-        IOObjectRelease(object)
-      }
+      // 只发送一次通知
+      print("设备移除")
+      NotificationCenter.default.post(name: USBNotificationCenter.deviceChangeNotification, object: nil)
+      // 清空迭代器
       while IOIteratorNext(iterator) != IO_OBJECT_NULL { }
     }
 
-    // 注册雷电设备添加和移除通知
-    IOServiceAddMatchingNotification(notificationPort, kIOFirstMatchNotification, matchingDict, addCallback, nil, &thunderboltAddedIterator)
-    IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, removeCallback, nil, &thunderboltRemovedIterator)
+    IOServiceAddMatchingNotification(notificationPort, kIOFirstMatchNotification, matchingDict, addCallback, nil, added)
+    IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, removeCallback, nil, removed)
 
     // 遍历现有设备以激活通知
-    addCallback(nil, thunderboltAddedIterator)
-    removeCallback(nil, thunderboltRemovedIterator)
+    addCallback(nil, added.pointee)
+    removeCallback(nil, removed.pointee)
   }
 }
-
-// 文件结束。没有额外的代码。
