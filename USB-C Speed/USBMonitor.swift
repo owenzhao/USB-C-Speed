@@ -5,26 +5,30 @@
 //  Created by zhaoxin on 2024-11-13.
 //
 
+import Combine
 import Foundation
 import UserNotifications
 
 class USBMonitor: ObservableObject {
   @Published var usbData: USBData = USBData(spusbDataType: [], spThunderboltDataType: [])
   private let usbNotificationCenter = USBNotificationCenter()
-
-  // 添加设备速度转换函数，添加对于雷电接口速度的支持
+  // 添加 Combine 订阅存储
+  private var cancellables = Set<AnyCancellable>()
 
   init() {
-    // 初始化时设置通知观察者
-    NotificationCenter.default.addObserver(self, selector: #selector(handleDeviceChanged), name: USBNotificationCenter.deviceChangeNotification, object: nil)
+    // 使用 Combine 替换 NotificationCenter
+    NotificationCenter.default
+      .publisher(for: USBNotificationCenter.deviceChangeNotification)
+      .debounce(for: .seconds(1), scheduler: RunLoop.main)
+      .sink { [weak self] _ in
+        Task { @MainActor in
+          await self?.updateDevices()
+        }
+      }
+      .store(in: &cancellables)
+
     // 初始加载USB和雷电数据
     loadUSBData()
-  }
-
-  @objc private func handleDeviceChanged() {
-    Task { @MainActor in
-      await updateDevices()
-    }
   }
 
   private func loadUSBData() {
