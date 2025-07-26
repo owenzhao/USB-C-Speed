@@ -9,31 +9,29 @@ import Foundation
 
 // MARK: - USBData
 struct USBData: Codable {
-  let spusbDataType: [SPUSBDataType]
+  let spusbHostDataType: [SPUSBHostDataType]
   let spThunderboltDataType: [SPThunderboltDataType]
 
   enum CodingKeys: String, CodingKey {
-    case spusbDataType = "SPUSBDataType"
+    case spusbHostDataType = "SPUSBHostDataType"
     case spThunderboltDataType = "SPThunderboltDataType"
   }
 }
 
-// MARK: - SPUSBDataType
-struct SPUSBDataType: Codable {
+// MARK: - SPUSBHostDataType
+struct SPUSBHostDataType: Codable {
   let items: [USBDevice]?
   let name: String
-  let hostController: String?
-  let pciDevice: String?
-  let pciRevision: String?
-  let pciVendor: String?
+  let driver: String?
+  let hardwareType: String?
+  let locationID: String?
 
   enum CodingKeys: String, CodingKey {
     case items = "_items"
     case name = "_name"
-    case hostController = "host_controller"
-    case pciDevice = "pci_device"
-    case pciRevision = "pci_revision"
-    case pciVendor = "pci_vendor"
+    case driver = "Driver"
+    case hardwareType = "USBKeyHardwareType"
+    case locationID = "USBKeyLocationID"
   }
 }
 
@@ -117,32 +115,28 @@ struct ThunderboltDevice: Codable {
 // MARK: - USBDevice
 struct USBDevice: Codable {
   let name: String
-  let deviceSpeed: String
-  let manufacturer: String?
-  let serialNum: String?
+  let linkSpeed: String?
+  let productID: String?
+  let productVersion: String?
+  let serialNumber: String?
+  let vendorID: String?
+  let vendorName: String?
+  let hardwareType: String?
   let locationID: String?
   let items: [USBDevice]?
-  let productID: String?
-  let vendorID: String?
-  let bcdDevice: String?
-  let busPower: String?
-  let busPowerUsed: String?
-  let extraCurrentUsed: String?
   let media: [Media]?
 
   enum CodingKeys: String, CodingKey {
     case name = "_name"
-    case deviceSpeed = "device_speed"
-    case manufacturer
-    case serialNum = "serial_num"
-    case locationID = "location_id"
+    case linkSpeed = "USBDeviceKeyLinkSpeed"
+    case productID = "USBDeviceKeyProductID"
+    case productVersion = "USBDeviceKeyProductVersion"
+    case serialNumber = "USBDeviceKeySerialNumber"
+    case vendorID = "USBDeviceKeyVendorID"
+    case vendorName = "USBDeviceKeyVendorName"
+    case hardwareType = "USBKeyHardwareType"
+    case locationID = "USBKeyLocationID"
     case items = "_items"
-    case productID = "product_id"
-    case vendorID = "vendor_id"
-    case bcdDevice = "bcd_device"
-    case busPower = "bus_power"
-    case busPowerUsed = "bus_power_used"
-    case extraCurrentUsed = "extra_current_used"
     case media = "Media"
   }
 }

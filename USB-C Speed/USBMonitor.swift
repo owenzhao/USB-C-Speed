@@ -10,7 +10,7 @@ import Foundation
 import UserNotifications
 
 class USBMonitor: ObservableObject {
-  @Published var usbData: USBData = USBData(spusbDataType: [], spThunderboltDataType: [])
+  @Published var usbData: USBData = USBData(spusbHostDataType: [], spThunderboltDataType: [])
   private let usbNotificationCenter = USBNotificationCenter()
   // 添加 Combine 订阅存储
   private var cancellables = Set<AnyCancellable>()
@@ -43,7 +43,7 @@ class USBMonitor: ObservableObject {
   private func listUSBDevices() -> String {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/sbin/system_profiler")
-    task.arguments = ["SPUSBDataType", "SPThunderboltDataType", "-json"]
+    task.arguments = ["SPUSBHostDataType", "SPThunderboltDataType", "-json"]
     let pipe = Pipe()
     task.standardOutput = pipe
 
@@ -107,13 +107,14 @@ class USBMonitor: ObservableObject {
   // 获取usbData的所有Devices（包括USB和雷电设备）
   private func getAllDevices(in usbData: USBData) -> [Device] {
     var devices = [Device]()
-    for spusbDataType in usbData.spusbDataType {
+    for spusbDataType in usbData.spusbHostDataType {
       if let items = spusbDataType.items {
         // 修改这里，将USB设备转换为Device对象
         let usbDevices = items.flatMap { getAllUSBDevices(from: $0) }
         devices.append(contentsOf: usbDevices.map { Device(usbDevice: $0) })
       }
     }
+
     for spThunderboltDataType in usbData.spThunderboltDataType {
       if let items = spThunderboltDataType.items {
         let thunderboltDevices = items.flatMap { getAllThunderboltDevices(from: $0) }
@@ -292,7 +293,7 @@ struct Device: Identifiable {
   init(usbDevice: USBDevice) {
     self.id = usbDevice.locationID ?? UUID().uuidString
     self.name = usbDevice.name
-    self.speed = USBMonitor.getDeviceSpeedString(usbDevice.deviceSpeed)
+    self.speed = USBMonitor.getDeviceSpeedString(usbDevice.linkSpeed ?? "unkown")
   }
 
   init(thunderboltDevice: ThunderboltDevice) {
