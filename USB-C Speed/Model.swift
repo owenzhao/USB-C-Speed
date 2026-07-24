@@ -123,6 +123,8 @@ struct USBDevice: Codable {
   let vendorName: String?
   let hardwareType: String?
   let locationID: String?
+  let powerSinkCapability: String?
+  let powerAllocated: String?
   let items: [USBDevice]?
   let media: [Media]?
 
@@ -136,6 +138,8 @@ struct USBDevice: Codable {
     case vendorName = "USBDeviceKeyVendorName"
     case hardwareType = "USBKeyHardwareType"
     case locationID = "USBKeyLocationID"
+    case powerSinkCapability = "USBDeviceKeyPowerSinkCapability"
+    case powerAllocated = "USBDeviceKeyPowerAllocation"
     case items = "_items"
     case media = "Media"
   }

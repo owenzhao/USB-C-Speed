@@ -148,6 +148,12 @@ struct USBDeviceView: View {
       if let linkSpeed = device.linkSpeed {
         Text("Link Speed: \(linkSpeed)")
       }
+      if let powerSinkCapability = device.powerSinkCapability {
+        Text("Power Sink Capability: \(powerSinkCapability)")
+      }
+      if let powerAllocated = device.powerAllocated {
+        Text("Power Allocated: \(powerAllocated)")
+      }
       if let productID = device.productID {
         Text("Product ID: \(productID)")
       }
@@ -398,6 +404,8 @@ struct USBDataView_Previews: PreviewProvider {
               vendorName: "Sample Vendor",
               hardwareType: "Removable",
               locationID: "0x01234567",
+              powerSinkCapability: "500",
+              powerAllocated: "500",
               items: nil,
               media: nil
             ),

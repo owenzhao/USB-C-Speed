@@ -385,6 +385,38 @@
         }
       }
     },
+    "Power Allocated: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Power Allocated: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已分配功率：%@"
+          }
+        }
+      }
+    },
+    "Power Sink Capability: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Power Sink Capability: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电源吸收能力：%@"
+          }
+        }
+      }
+    },
     "Product Version: %@" : {
       "localizations" : {
         "en" : {
