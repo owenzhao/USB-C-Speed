@@ -65,10 +65,18 @@
         }
       }
     },
-    "%lld%%" : {
-
+    "Bluetooth Battery Level: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙设备电池电量：%@"
+          }
+        }
+      }
     },
     "Bluetooth Battery Level: %lld%%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

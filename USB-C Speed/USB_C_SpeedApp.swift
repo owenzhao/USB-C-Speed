@@ -29,7 +29,7 @@ struct USB_C_SpeedApp: App {
         Image(systemName: "bolt.fill")
         if let battery = usbMonitor.bluetoothBattery {
           Image(systemName: battery.isCharging ? "battery.100percent.bolt" : "battery.50percent")
-          Text("\(battery.level)%")
+          Text(Double(battery.level) / 100, format: .percent)
         }
       }
       .fixedSize()
