@@ -23,7 +23,7 @@ USB-C Speed 是一款 macOS 菜单栏工具，用于查看当前 USB 与 Thunder
 
 ## 网站
 
-项目介绍网站位于仓库根目录的 [index.html](index.html)，可直接作为 GitHub Pages 首页部署。
+访问 [USB-C Speed 官网](https://owenzhao.github.io/USB-C-Speed/) 了解功能、使用方式和项目作者。网站支持跟随系统自动切换明亮与黑暗主题。
 
 ## 开发
 
