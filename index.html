@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="USB-C Speed 在 macOS 上显示 USB、Thunderbolt 与 USB4 设备的实际连接速率和状态。">
+    <title>USB-C Speed — 看清每一次连接</title>
+    <style>
+      :root { color-scheme: light; --ink: #14213d; --muted: #5b677c; --line: #e3e8f0; --blue: #1769e0; --mint: #54d5b0; }
+      * { box-sizing: border-box; }
+      body { margin: 0; color: var(--ink); background: #f8fafc; font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      a { color: inherit; text-decoration: none; }
+      .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+      nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+      .brand { display: flex; gap: 10px; align-items: center; font-weight: 750; letter-spacing: -.02em; }
+      .bolt { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; color: white; background: linear-gradient(135deg, #2075ef, #4ec9b0); }
+      .github { color: var(--muted); font-size: 14px; }
+      .hero { overflow: hidden; position: relative; padding: 88px 0 70px; background: radial-gradient(circle at 76% 20%, #d8f6ee 0, transparent 27%), radial-gradient(circle at 25% 10%, #e7f0ff 0, transparent 33%), #f8fafc; }
+      .hero-grid { display: grid; gap: 56px; align-items: center; grid-template-columns: 1fr .9fr; }
+      .eyebrow { margin: 0 0 16px; color: var(--blue); font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      h1 { max-width: 680px; margin: 0; font-size: clamp(42px, 6vw, 72px); line-height: 1.06; letter-spacing: -.065em; }
+      .lead { max-width: 550px; margin: 24px 0 30px; color: var(--muted); font-size: 19px; }
+      .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+      .button { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 19px; border: 1px solid var(--line); border-radius: 12px; background: white; font-weight: 650; }
+      .button.primary { border-color: var(--blue); color: white; background: var(--blue); box-shadow: 0 10px 22px #1769e03b; }
+      .app-window { overflow: hidden; border: 1px solid #d6dde8; border-radius: 15px; background: #fff; box-shadow: 0 28px 55px #16295225; transform: rotate(2deg); }
+      .titlebar { display: flex; gap: 7px; align-items: center; height: 38px; padding: 0 14px; border-bottom: 1px solid #e7ebf1; background: #f8f9fb; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff605c; } .dot:nth-child(2) { background: #ffbd44; } .dot:nth-child(3) { background: #00ca4e; }
+      .window-title { margin-left: auto; margin-right: auto; color: #546174; font-size: 13px; font-weight: 700; }
+      .app-body { padding: 20px; font-size: 13px; }
+      .bus { margin-bottom: 18px; } .bus:last-child { margin-bottom: 0; }
+      .bus strong { display: block; margin-bottom: 7px; font-size: 14px; }
+      .details { padding: 10px 12px; border-left: 3px solid var(--mint); border-radius: 6px; background: #f4f8fa; color: #536176; }
+      .speed { color: #087a5f; font-weight: 750; }
+      section { padding: 94px 0; } .section-head { max-width: 620px; margin-bottom: 36px; }
+      h2 { margin: 0 0 12px; font-size: clamp(30px, 4vw, 44px); line-height: 1.14; letter-spacing: -.045em; }
+      .section-head p { margin: 0; color: var(--muted); font-size: 18px; }
+      .features { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
+      .feature { min-height: 205px; padding: 25px; border: 1px solid var(--line); border-radius: 16px; background: white; }
+      .feature-icon { color: var(--blue); font-size: 24px; } .feature h3 { margin: 18px 0 8px; font-size: 18px; } .feature p { margin: 0; color: var(--muted); font-size: 15px; }
+      .steps { display: grid; gap: 22px; grid-template-columns: repeat(3, 1fr); counter-reset: step; }
+      .step { padding-top: 18px; border-top: 2px solid #cad8ed; } .step::before { counter-increment: step; content: "0" counter(step); color: var(--blue); font-size: 13px; font-weight: 800; letter-spacing: .08em; } .step h3 { margin: 10px 0 6px; font-size: 18px; } .step p { margin: 0; color: var(--muted); }
+      .cta { padding: 42px; border-radius: 22px; color: white; background: linear-gradient(115deg, #0c438e, #1769e0 54%, #159f8b); } .cta h2 { max-width: 600px; } .cta p { max-width: 560px; color: #dceaff; }
+      footer { padding: 28px 0 42px; color: var(--muted); font-size: 14px; }
+      @media (max-width: 760px) { .hero { padding-top: 52px; } .hero-grid, .features, .steps { grid-template-columns: 1fr; } .app-window { max-width: 430px; margin: 0 auto; transform: none; } section { padding: 64px 0; } .cta { padding: 30px; } }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <nav>
+          <a class="brand" href="#top"><span class="bolt">ϟ</span> USB-C Speed</a>
+          <a class="github" href="https://github.com/owenzhao/USB-C-Speed">GitHub ↗</a>
+        </nav>
+        <div class="hero-grid" id="top">
+          <div>
+            <p class="eyebrow">macOS · USB / Thunderbolt / USB4</p>
+            <h1>看清每一次<br>高速连接。</h1>
+            <p class="lead">USB-C Speed 从 macOS 系统信息中读取真实的设备与链路状态，让线材、扩展坞和接口造成的速率落差无所遁形。</p>
+            <div class="actions">
+              <a class="button primary" href="https://github.com/owenzhao/USB-C-Speed">查看源代码</a>
+              <a class="button" href="#features">了解功能</a>
+            </div>
+          </div>
+          <div class="app-window" aria-label="USB-C Speed 应用界面示意">
+            <div class="titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="window-title">USB-C Speed</span></div>
+            <div class="app-body">
+              <div class="bus"><strong>USB 3.1 Bus</strong><div class="details">USB3 Gen2 Hub<br>Link Speed: <span class="speed">10 Gb/s</span><br>Power Allocated: 900 mA</div></div>
+              <div class="bus"><strong>Thunderbolt / USB4</strong><div class="details">Current Speed: <span class="speed">Up to 40 Gb/s</span><br>Receptacle Status: Connected</div></div>
+              <div class="bus"><strong>已连接设备</strong><div class="details">展开即可查看厂商、产品、介质及供电信息。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section id="features"><div class="wrap"><div class="section-head"><h2>为真实连接状态而生</h2><p>不是宣传规格，而是 macOS 当前检测到的设备树、连接速率与接口状态。</p></div><div class="features">
+        <article class="feature"><div class="feature-icon">↯</div><h3>查看实际速率</h3><p>查看 USB Link Speed，以及 Thunderbolt / USB4 接口当前报告的最高速率与连接状态。</p></article>
+        <article class="feature"><div class="feature-icon">⌁</div><h3>设备树一目了然</h3><p>从总线、集线器到嵌套设备，按层级展示；展开可查看厂商、产品、介质和供电分配。</p></article>
+        <article class="feature"><div class="feature-icon">◉</div><h3>持续在菜单栏守候</h3><p>设备接入或移除后自动刷新并发送通知；蓝牙设备还会在菜单栏显示电量和充电状态。</p></article>
+      </div></div></section>
+      <section><div class="wrap"><div class="section-head"><h2>打开后，连接信息自然浮现。</h2><p>应用会注册为登录项，之后只需接入设备，即可在主窗口或菜单栏快速检查。</p></div><div class="steps"><article class="step"><h3>启动应用</h3><p>打开 USB-C Speed，首次运行后会注册为登录项。</p></article><article class="step"><h3>接入设备</h3><p>连接 USB-C 设备、扩展坞或 Thunderbolt 外设。</p></article><article class="step"><h3>核对状态</h3><p>展开设备详情，确认链路速率、接口状态与供电信息。</p></article></div></div></section>
+      <section><div class="wrap"><div class="cta"><h2>让每一条 USB-C 线都跑在你预期的速度上。</h2><p>适用于 macOS 26 或更高版本。项目开源，可直接使用 Xcode 构建运行。</p><div class="actions"><a class="button" href="https://github.com/owenzhao/USB-C-Speed">在 GitHub 查看项目</a></div></div></div></section>
+    </main>
+    <footer><div class="wrap">USB-C Speed · macOS 26+ · <a href="https://github.com/owenzhao/USB-C-Speed">owenzhao/USB-C-Speed</a></div></footer>
+  </body>
+</html>
