@@ -8,14 +8,14 @@
     <style>
       :root { color-scheme: light; --ink: #14213d; --muted: #5b677c; --line: #e3e8f0; --blue: #1769e0; --mint: #54d5b0; }
       * { box-sizing: border-box; }
-      body { margin: 0; color: var(--ink); background: #f8fafc; font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      body { margin: 0; color: var(--ink); background: #eef2f7; font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif; }
       a { color: inherit; text-decoration: none; }
       .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
       nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
       .brand { display: flex; gap: 10px; align-items: center; font-weight: 750; letter-spacing: -.02em; }
       .bolt { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; color: white; background: linear-gradient(135deg, #2075ef, #4ec9b0); }
       .github { color: var(--muted); font-size: 14px; }
-      .hero { overflow: hidden; position: relative; padding: 88px 0 70px; background: radial-gradient(circle at 76% 20%, #d8f6ee 0, transparent 27%), radial-gradient(circle at 25% 10%, #e7f0ff 0, transparent 33%), #f8fafc; }
+      .hero { overflow: hidden; position: relative; padding: 88px 0 70px; background: radial-gradient(circle at 76% 20%, #ccefe7 0, transparent 27%), radial-gradient(circle at 25% 10%, #dbe8fa 0, transparent 33%), #eef2f7; }
       .hero-grid { display: grid; gap: 56px; align-items: center; grid-template-columns: 1fr .9fr; }
       .eyebrow { margin: 0 0 16px; color: var(--blue); font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
       h1 { max-width: 680px; margin: 0; font-size: clamp(42px, 6vw, 72px); line-height: 1.06; letter-spacing: -.065em; }
@@ -40,7 +40,7 @@
       .feature-icon { color: var(--blue); font-size: 24px; } .feature h3 { margin: 18px 0 8px; font-size: 18px; } .feature p { margin: 0; color: var(--muted); font-size: 15px; }
       .steps { display: grid; gap: 22px; grid-template-columns: repeat(3, 1fr); counter-reset: step; }
       .step { padding-top: 18px; border-top: 2px solid #cad8ed; } .step::before { counter-increment: step; content: "0" counter(step); color: var(--blue); font-size: 13px; font-weight: 800; letter-spacing: .08em; } .step h3 { margin: 10px 0 6px; font-size: 18px; } .step p { margin: 0; color: var(--muted); }
-      .cta { padding: 42px; border-radius: 22px; color: white; background: linear-gradient(115deg, #0c438e, #1769e0 54%, #159f8b); } .cta h2 { max-width: 600px; } .cta p { max-width: 560px; color: #dceaff; }
+      .cta { padding: 42px; border-radius: 22px; color: white; background: linear-gradient(115deg, #0c438e, #1769e0 54%, #159f8b); } .cta h2 { max-width: 600px; } .cta p { max-width: 560px; color: #dceaff; } .cta .button { color: var(--ink); border-color: white; }
       footer { padding: 28px 0 42px; color: var(--muted); font-size: 14px; }
       @media (max-width: 760px) { .hero { padding-top: 52px; } .hero-grid, .features, .steps { grid-template-columns: 1fr; } .app-window { max-width: 430px; margin: 0 auto; transform: none; } section { padding: 64px 0; } .cta { padding: 30px; } }
     </style>
