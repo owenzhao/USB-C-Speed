@@ -148,6 +148,12 @@ struct USBDeviceView: View {
       if let linkSpeed = device.linkSpeed {
         Text("Link Speed: \(linkSpeed)")
       }
+      if let battery = device.bluetoothBattery {
+        Text("Bluetooth Battery Level: \(battery.level)%")
+        if battery.isCharging {
+          Text("Charging")
+        }
+      }
       if let powerSinkCapability = device.powerSinkCapability {
         Text("Power Sink Capability: \(powerSinkCapability)")
       }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IOKit
 
 // MARK: - USBData
 struct USBData: Codable {
@@ -142,6 +143,56 @@ struct USBDevice: Codable {
     case powerAllocated = "USBDeviceKeyPowerAllocation"
     case items = "_items"
     case media = "Media"
+  }
+
+  var bluetoothBattery: (level: Int, isCharging: Bool)? {
+    guard let serialNumber else { return nil }
+
+    var iterator: io_iterator_t = 0
+    guard IOServiceGetMatchingServices(
+      kIOMainPortDefault,
+      IOServiceMatching("AppleDeviceManagementHIDEventService"),
+      &iterator
+    ) == KERN_SUCCESS else {
+      return nil
+    }
+    defer { IOObjectRelease(iterator) }
+
+    var service = IOIteratorNext(iterator)
+    while service != 0 {
+      let hidSerialNumber = IORegistryEntryCreateCFProperty(
+        service,
+        "SerialNumber" as CFString,
+        kCFAllocatorDefault,
+        0
+      )?.takeRetainedValue() as? String
+      let isBluetoothDevice = IORegistryEntryCreateCFProperty(
+        service,
+        "BluetoothDevice" as CFString,
+        kCFAllocatorDefault,
+        0
+      )?.takeRetainedValue() as? Bool
+      let batteryLevel = IORegistryEntryCreateCFProperty(
+        service,
+        "BatteryPercent" as CFString,
+        kCFAllocatorDefault,
+        0
+      )?.takeRetainedValue() as? Int
+      let batteryStatusFlags = IORegistryEntryCreateCFProperty(
+        service,
+        "BatteryStatusFlags" as CFString,
+        kCFAllocatorDefault,
+        0
+      )?.takeRetainedValue() as? Int
+
+      IOObjectRelease(service)
+      if hidSerialNumber == serialNumber, isBluetoothDevice == true,
+         let batteryLevel {
+        return (batteryLevel, batteryStatusFlags.map { $0 & 0x2 != 0 } ?? false)
+      }
+      service = IOIteratorNext(iterator)
+    }
+    return nil
   }
 }
 

@@ -11,6 +11,7 @@ import UserNotifications
 
 class USBMonitor: ObservableObject {
   @Published var usbData: USBData = USBData(spusbHostDataType: [], spThunderboltDataType: [])
+  @Published private(set) var bluetoothBattery: (level: Int, isCharging: Bool)?
   private let usbNotificationCenter = USBNotificationCenter()
   // 添加 Combine 订阅存储
   private var cancellables = Set<AnyCancellable>()
@@ -27,6 +28,13 @@ class USBMonitor: ObservableObject {
       }
       .store(in: &cancellables)
 
+    Timer.publish(every: 30, on: .main, in: .common)
+      .autoconnect()
+      .sink { [weak self] _ in
+        self?.refreshBluetoothBattery()
+      }
+      .store(in: &cancellables)
+
     // 初始加载USB和雷电数据
     loadUSBData()
   }
@@ -34,9 +42,24 @@ class USBMonitor: ObservableObject {
   private func loadUSBData() {
     do {
       self.usbData = try getUSBData()
+      refreshBluetoothBattery()
     } catch {
       print("加载 USB 和雷电数据时出错：\(error)")
     }
+  }
+
+  private func refreshBluetoothBattery() {
+    for dataType in usbData.spusbHostDataType {
+      for device in dataType.items ?? [] {
+        for nestedDevice in getAllUSBDevices(from: device) {
+          if let battery = nestedDevice.bluetoothBattery {
+            bluetoothBattery = battery
+            return
+          }
+        }
+      }
+    }
+    bluetoothBattery = nil
   }
 
   // 通过system_profiler同时读取USB设备和雷电设备信息
@@ -180,6 +203,7 @@ class USBMonitor: ObservableObject {
     do {
       let oldData = self.usbData
       self.usbData = try getUSBData()
+      refreshBluetoothBattery()
       let (state, devices) = compareUSBData(newData: self.usbData, oldData: oldData)
 
       guard state != .noChange else {

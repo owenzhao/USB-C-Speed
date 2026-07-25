@@ -21,9 +21,18 @@ struct USB_C_SpeedApp: App {
         }
     }
 
-    // 修改 MenuBarExtra 以使用自定义视图
-    MenuBarExtra("USB-C Speed", systemImage: "bolt.fill") {
+    MenuBarExtra {
       SimplifiedUSBDataView(usbData: usbMonitor.usbData)
+        .frame(width: 380, height: 520)
+    } label: {
+      HStack(spacing: 4) {
+        Image(systemName: "bolt.fill")
+        if let battery = usbMonitor.bluetoothBattery {
+          Image(systemName: battery.isCharging ? "battery.100percent.bolt" : "battery.50percent")
+          Text("\(battery.level)%")
+        }
+      }
+      .fixedSize()
     }
     .menuBarExtraStyle(.window)
   }

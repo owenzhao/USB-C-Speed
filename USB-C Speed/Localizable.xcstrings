@@ -65,6 +65,25 @@
         }
       }
     },
+    "%lld%%" : {
+
+    },
+    "Bluetooth Battery Level: %lld%%" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Bluetooth Battery Level: %lld%%"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙电池电量：%lld%%"
+          }
+        }
+      }
+    },
     "BSD Name: %@" : {
       "localizations" : {
         "en" : {
@@ -77,6 +96,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "BSD名称：%@"
+          }
+        }
+      }
+    },
+    "Charging" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Charging"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在充电"
           }
         }
       }
@@ -369,22 +404,6 @@
         }
       }
     },
-    "Product ID: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Product ID: %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "产品编号：%@"
-          }
-        }
-      }
-    },
     "Power Allocated: %@" : {
       "localizations" : {
         "en" : {
@@ -413,6 +432,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "电源吸收能力：%@"
+          }
+        }
+      }
+    },
+    "Product ID: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Product ID: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "产品编号：%@"
           }
         }
       }
@@ -610,6 +645,7 @@
       }
     },
     "USB-C Speed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
