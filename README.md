@@ -2,7 +2,7 @@
 
 USB-C Speed 是一款 macOS 菜单栏工具，用于查看当前 USB 与 Thunderbolt / USB4 设备的实际连接状态，避免高速设备因线材、扩展坞或接口限制而以较低速率运行。
 
-![USB-C Speed](assets/sc.jpg)
+![USB-C Speed](assets/sc-current.png)
 
 ## 功能
 
