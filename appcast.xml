@@ -3,6 +3,15 @@
     <channel>
         <title>USB-C Speed</title>
         <item>
+            <title>2.2.2</title>
+            <pubDate>Fri, 14 Aug 2026 15:31:07 +0800</pubDate>
+            <link>https://owenzhao.github.io/USB-C-Speed/</link>
+            <sparkle:version>12</sparkle:version>
+            <sparkle:shortVersionString>2.2.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/owenzhao/USB-C-Speed/releases/download/release-2.2.2/USB-C.Speed-2.2.2.zip" length="4074701" type="application/octet-stream" sparkle:edSignature="jPcWUSDdfEq9eYyYW8CAmthChspKeR97bUXu+/Z3x6CIF8OEXK/Ij34+/g/rsoTD+HHb0wbSrgaEwVGv9TyoAw=="/>
+        </item>
+        <item>
             <title>2.2.1</title>
             <pubDate>Fri, 14 Aug 2026 10:05:27 +0800</pubDate>
             <link>https://owenzhao.github.io/USB-C-Speed/</link>
