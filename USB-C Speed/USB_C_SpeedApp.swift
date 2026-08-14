@@ -21,35 +21,10 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
     if updaterController.updater.automaticallyChecksForUpdates {
       updaterController.updater.checkForUpdatesInBackground()
     }
-
-    DispatchQueue.main.async {
-      self.installUpdateMenuItem()
-    }
   }
 
-  func applicationDidBecomeActive(_ notification: Notification) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-      self.installUpdateMenuItem()
-    }
-  }
-
-  private func installUpdateMenuItem() {
-    guard let applicationMenu = NSApp.mainMenu?.items.first?.submenu else { return }
-    let title = NSLocalizedString("Check for Updates…", comment: "")
-
-    guard !applicationMenu.items.contains(where: { $0.title == title }),
-          let aboutIndex = applicationMenu.items.firstIndex(where: {
-            $0.title.hasPrefix("About ") ||
-            $0.action == #selector(NSApplication.orderFrontStandardAboutPanel(_:))
-          }) else { return }
-
-    let item = NSMenuItem(title: title, action: #selector(checkForUpdates(_:)), keyEquivalent: "")
-    item.target = self
-    applicationMenu.insertItem(item, at: aboutIndex + 1)
-  }
-
-  @objc private func checkForUpdates(_ sender: Any?) {
-    updaterController.checkForUpdates(sender)
+  func checkForUpdates() {
+    updaterController.checkForUpdates(nil)
   }
 }
 
@@ -65,6 +40,13 @@ struct USB_C_SpeedApp: App {
         .onAppear {
           registerLogin()
         }
+    }
+    .commands {
+      CommandGroup(after: .appInfo) {
+        Button(NSLocalizedString("Check for Updates…", comment: "Check for updates menu item")) {
+          appDelegate.checkForUpdates()
+        }
+      }
     }
 
     MenuBarExtra {
