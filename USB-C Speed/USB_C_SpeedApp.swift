@@ -7,9 +7,19 @@
 
 import SwiftUI
 import ServiceManagement
+import Sparkle
+
+private final class AppDelegate: NSObject, NSApplicationDelegate {
+  let updaterController = SPUStandardUpdaterController(
+    startingUpdater: true,
+    updaterDelegate: nil,
+    userDriverDelegate: nil
+  )
+}
 
 @main
 struct USB_C_SpeedApp: App {
+  @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
   @StateObject private var usbMonitor = USBMonitor()
   @State private var isMenuBarViewPresented = true
 
@@ -35,6 +45,14 @@ struct USB_C_SpeedApp: App {
       .fixedSize()
     }
     .menuBarExtraStyle(.window)
+  }
+
+  var commands: some Commands {
+    CommandGroup(after: .appInfo) {
+      Button("Check for Updates…") {
+        appDelegate.updaterController.checkForUpdates(nil)
+      }
+    }
   }
 
   func registerLogin() {

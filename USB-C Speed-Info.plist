@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SUAllowsAutomaticUpdates</key>
+	<true/>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://owenzhao.github.io/USB-C-Speed/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>AFLJdAEvEr6eozot3b4gGoqsIh0Qc2jusxHWorZSJGg=</string>
+</dict>
+</plist>
