@@ -75,23 +75,6 @@
         }
       }
     },
-    "Bluetooth Battery Level: %lld%%" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Bluetooth Battery Level: %lld%%"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙电池电量：%lld%%"
-          }
-        }
-      }
-    },
     "BSD Name: %@" : {
       "localizations" : {
         "en" : {
@@ -120,6 +103,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在充电"
+          }
+        }
+      }
+    },
+    "Check for Updates…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查更新..."
           }
         }
       }
@@ -648,23 +641,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "USB接口：%lld"
-          }
-        }
-      }
-    },
-    "USB-C Speed" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "USB-C Speed"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "USB-C速度"
           }
         }
       }

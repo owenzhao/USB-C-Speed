@@ -101,13 +101,13 @@
 			);
 			mainGroup = DCF653842CE016FB0033CF66;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DCAAB0032F4D0001005D28E9 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DCF6538E2CE016FB0033CF66 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-			packageReferences = (
-				DCAAB0032F4D0001005D28E9 /* XCRemoteSwiftPackageReference "Sparkle" */,
-			);
 			targets = (
 				DCF6538C2CE016FB0033CF66 /* USB-C Speed */,
 			);
@@ -271,7 +271,7 @@
 				CODE_SIGN_ENTITLEMENTS = "USB-C Speed/USB_C_Speed.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"USB-C Speed/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -285,7 +285,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parussoft.USB-C-Speed";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -301,7 +301,7 @@
 				CODE_SIGN_ENTITLEMENTS = "USB-C Speed/USB_C_Speed.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"USB-C Speed/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -315,7 +315,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parussoft.USB-C-Speed";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
