@@ -32,7 +32,12 @@ struct USB_C_SpeedApp: App {
     }
 
     MenuBarExtra {
-      SimplifiedUSBDataView(usbData: usbMonitor.usbData)
+      SimplifiedUSBDataView(
+        usbData: usbMonitor.usbData,
+        onCheckForUpdates: {
+          appDelegate.updaterController.checkForUpdates(nil)
+        }
+      )
         .frame(width: 380, height: 520)
     } label: {
       HStack(spacing: 4) {

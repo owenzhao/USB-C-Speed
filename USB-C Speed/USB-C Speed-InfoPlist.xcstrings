@@ -25,14 +25,14 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : ""
+            "state" : "translated",
+            "value" : "Copyright © 2024 Zhao Xin. Uses Sparkle for automatic updates."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "Copyright © 2024 Zhao Xin。使用 Sparkle 实现自动更新。"
           }
         }
       }
