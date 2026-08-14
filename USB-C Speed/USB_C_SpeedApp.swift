@@ -15,6 +15,12 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
     updaterDelegate: nil,
     userDriverDelegate: nil
   )
+
+  func applicationDidFinishLaunching(_ notification: Notification) {
+    if updaterController.updater.automaticallyChecksForUpdates {
+      updaterController.updater.checkForUpdatesInBackground()
+    }
+  }
 }
 
 @main
@@ -29,6 +35,13 @@ struct USB_C_SpeedApp: App {
         .onAppear {
           registerLogin()
         }
+    }
+    .commands {
+      CommandGroup(after: .appInfo) {
+        Button("Check for Updates…") {
+          appDelegate.updaterController.checkForUpdates(nil)
+        }
+      }
     }
 
     MenuBarExtra {
@@ -50,14 +63,6 @@ struct USB_C_SpeedApp: App {
       .fixedSize()
     }
     .menuBarExtraStyle(.window)
-  }
-
-  var commands: some Commands {
-    CommandGroup(after: .appInfo) {
-      Button("Check for Updates…") {
-        appDelegate.updaterController.checkForUpdates(nil)
-      }
-    }
   }
 
   func registerLogin() {
