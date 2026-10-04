@@ -149,7 +149,7 @@ struct USBDeviceView: View {
         Text("Link Speed: \(linkSpeed)")
       }
       if let battery = device.bluetoothBattery {
-        Text("Bluetooth Battery Level: \(battery.level)%")
+        Text("Bluetooth Battery Level: \(Double(battery.level) / 100, format: .percent)")
         if battery.isCharging {
           Text("Charging")
         }
