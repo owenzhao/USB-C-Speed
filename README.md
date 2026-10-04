@@ -19,7 +19,7 @@ USB-C Speed is a macOS menu bar utility that shows the live connection status of
 
 ## Usage
 
-Launch the app to inspect the full device tree in its main window. Click the bolt icon in the menu bar for a quick view of connected devices, then expand an item to inspect its details.
+Launch the app once; it stays available from the menu bar. Click the bolt icon for a compact connection summary, then switch to the detailed view to inspect the device tree, reported speeds, and port status.
 
 ## Website
 
