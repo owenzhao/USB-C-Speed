@@ -10,29 +10,13 @@ import SwiftUI
 // MARK: - SimplifiedUSBDataView
 struct SimplifiedUSBDataView: View {
   let usbData: USBData
-  var onCheckForUpdates: () -> Void = {}
 
   var body: some View {
-    VStack(spacing: 0) {
-      HStack {
-        Spacer()
-        Button("Check for Updates…", action: onCheckForUpdates)
-          .buttonStyle(.borderless)
-      }
-      .padding(.horizontal)
-      .padding(.top, 8)
-      .padding(.bottom, 4)
-
-      Divider()
-
-      ScrollView {
-        VStack(alignment: .leading, spacing: 20) {
-          usbHostSection
-          thunderboltSection
-        }
-        .padding()
-      }
+    VStack(alignment: .leading, spacing: 20) {
+      usbHostSection
+      thunderboltSection
     }
+    .padding()
   }
 
   @ViewBuilder

@@ -21,57 +21,15 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
     if updaterController.updater.automaticallyChecksForUpdates {
       updaterController.updater.checkForUpdatesInBackground()
     }
+    registerLogin()
   }
 
   func checkForUpdates() {
     updaterController.checkForUpdates(nil)
   }
-}
 
-@main
-struct USB_C_SpeedApp: App {
-  @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-  @StateObject private var usbMonitor = USBMonitor()
-  @State private var isMenuBarViewPresented = true
-
-  var body: some Scene {
-    WindowGroup {
-      USBDataView(usbData: usbMonitor.usbData)
-        .onAppear {
-          registerLogin()
-        }
-    }
-    .commands {
-      CommandGroup(after: .appInfo) {
-        Button(NSLocalizedString("Check for Updates…", comment: "Check for updates menu item")) {
-          appDelegate.checkForUpdates()
-        }
-      }
-    }
-
-    MenuBarExtra {
-      SimplifiedUSBDataView(
-        usbData: usbMonitor.usbData,
-        onCheckForUpdates: {
-          appDelegate.updaterController.checkForUpdates(nil)
-        }
-      )
-        .frame(width: 380, height: 520)
-    } label: {
-      HStack(spacing: 4) {
-        Image(systemName: "bolt.fill")
-        if let battery = usbMonitor.bluetoothBattery {
-          Image(systemName: battery.isCharging ? "battery.100percent.bolt" : "battery.50percent")
-          Text(Double(battery.level) / 100, format: .percent)
-        }
-      }
-      .fixedSize()
-    }
-    .menuBarExtraStyle(.window)
-  }
-
+  // 将应用程序添加到登录项
   func registerLogin() {
-    // 将应用程序添加到登录项
     let app = SMAppService.mainApp
 
     switch app.status {
@@ -89,12 +47,39 @@ struct USB_C_SpeedApp: App {
     }
   }
 
-  func register(_ app: SMAppService) {
+  private func register(_ app: SMAppService) {
     do {
       try app.register()
       print("register")
     } catch {
       print("Error: \(error.localizedDescription)")
     }
+  }
+}
+
+@main
+struct USB_C_SpeedApp: App {
+  @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+  @StateObject private var usbMonitor = USBMonitor()
+
+  var body: some Scene {
+    MenuBarExtra {
+      MenuBarRootView(
+        usbData: usbMonitor.usbData,
+        onCheckForUpdates: {
+          appDelegate.updaterController.checkForUpdates(nil)
+        }
+      )
+    } label: {
+      HStack(spacing: 4) {
+        Image(systemName: "bolt.fill")
+        if let battery = usbMonitor.bluetoothBattery {
+          Image(systemName: battery.isCharging ? "battery.100percent.bolt" : "battery.50percent")
+          Text(Double(battery.level) / 100, format: .percent)
+        }
+      }
+      .fixedSize()
+    }
+    .menuBarExtraStyle(.window)
   }
 }

@@ -437,6 +437,22 @@
         }
       }
     },
+    "Quit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Quit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出"
+          }
+        }
+      }
+    },
     "Product ID: %@" : {
       "localizations" : {
         "en" : {
@@ -529,6 +545,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "序列号：%@"
+          }
+        }
+      }
+    },
+    "Show More" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show More"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示更多"
           }
         }
       }
