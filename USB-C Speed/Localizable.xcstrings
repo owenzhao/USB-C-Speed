@@ -1,92 +1,52 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "  Current Speed: %@" : {
+    "Active" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "  Current Speed: %@"
+            "state" : "translated",
+            "value" : "Active"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当前速度：%@"
+            "value" : "已激活"
           }
         }
       }
     },
-    "  Link Status: %@" : {
+    "Bluetooth Battery Level" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "  Link Status: %@"
+            "state" : "translated",
+            "value" : "Bluetooth Battery Level"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "连接状态：%@"
+            "value" : "蓝牙设备电池电量"
           }
         }
       }
     },
-    "  Receptacle ID: %@" : {
+    "BSD Name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "  Receptacle ID: %@"
+            "state" : "translated",
+            "value" : "BSD Name"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "容器id：%@"
-          }
-        }
-      }
-    },
-    "  Receptacle Status: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "  Receptacle Status: %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "插座状态：%@"
-          }
-        }
-      }
-    },
-    "Bluetooth Battery Level: %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙设备电池电量：%@"
-          }
-        }
-      }
-    },
-    "BSD Name: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "BSD Name: %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BSD名称：%@"
+            "value" : "BSD 名称"
           }
         }
       }
@@ -112,263 +72,346 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查更新..."
+            "value" : "检查更新…"
           }
         }
       }
     },
-    "Connection Info:" : {
+    "Collapse All" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Connection Info:"
+            "state" : "translated",
+            "value" : "Collapse All"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "连接信息："
+            "value" : "收起全部"
           }
         }
       }
     },
-    "Device ID: %@" : {
+    "Collapse Every Node" : {
+
+    },
+    "Connect a USB or Thunderbolt device to see its link speed here." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Device ID: %@"
+            "state" : "translated",
+            "value" : "Connect a USB or Thunderbolt device to see its link speed here."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设备id：%@"
+            "value" : "连接 USB 或雷雳设备后，这里会显示它的链路速度。"
           }
         }
       }
     },
-    "Device Name: %@" : {
+    "Connected" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Device Name: %@"
+            "state" : "translated",
+            "value" : "Connected"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设备名称：%@"
+            "value" : "已连接"
           }
         }
       }
     },
-    "Device Revision: %@" : {
+    "Connection Type" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Device Revision: %@"
+            "state" : "translated",
+            "value" : "Connection Type"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设备修订：%@"
+            "value" : "连接类型"
           }
         }
       }
     },
-    "Domain UUID: %@" : {
+    "Device ID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Domain UUID: %@"
+            "state" : "translated",
+            "value" : "Device ID"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "域名uuid：%@"
+            "value" : "设备 ID"
           }
         }
       }
     },
-    "Driver: %@" : {
+    "Device Revision" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Driver: %@"
+            "state" : "translated",
+            "value" : "Device Revision"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "驱动：%@"
+            "value" : "设备修订版本"
           }
         }
       }
     },
-    "File System: %@" : {
+    "Domain UUID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "File System: %@"
+            "state" : "translated",
+            "value" : "Domain UUID"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文件系统：%@"
+            "value" : "域 UUID"
           }
         }
       }
     },
-    "Free Space in Bytes: %lld" : {
+    "Driver" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Free Space in Bytes: %lld"
+            "state" : "translated",
+            "value" : "Driver"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "空闲空间：%lld字节"
+            "value" : "驱动程序"
           }
         }
       }
     },
-    "Free Space: %@" : {
+    "Expand All" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Free Space: %@"
+            "state" : "translated",
+            "value" : "Expand All"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "空闲空间：%@"
+            "value" : "展开全部"
           }
         }
       }
     },
-    "Hardware Type: %@" : {
+    "Expand Every Node" : {
+
+    },
+    "File System" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Hardware Type: %@"
+            "state" : "translated",
+            "value" : "File System"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "硬件类型：%@"
+            "value" : "文件系统"
           }
         }
       }
     },
-    "IO Content: %@" : {
+    "Free Space" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "IO Content: %@"
+            "state" : "translated",
+            "value" : "Free Space"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IO内容：%@"
+            "value" : "可用空间"
           }
         }
       }
     },
-    "Link Speed: %@" : {
+    "Inactive" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Link Speed: %@"
+            "state" : "translated",
+            "value" : "Inactive"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "连接速度：%@"
+            "value" : "未激活"
           }
         }
       }
     },
-    "Location ID: %@" : {
+    "IO Content" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Location ID: %@"
+            "state" : "translated",
+            "value" : "IO Content"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "地点id：%@"
+            "value" : "IO 内容"
           }
         }
       }
     },
-    "Logical Unit: %lld" : {
+    "Legacy" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Logical Unit: %lld"
+            "state" : "translated",
+            "value" : "Legacy"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "逻辑单元：%lld"
+            "value" : "传统模式"
           }
         }
       }
     },
-    "Mode: %@" : {
+    "Link Status" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Mode: %@"
+            "state" : "translated",
+            "value" : "Link Status"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模式：%@"
+            "value" : "链路状态"
           }
         }
       }
     },
-    "Mount Point: %@" : {
+    "Location ID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Mount Point: %@"
+            "state" : "translated",
+            "value" : "Location ID"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "挂载点: %@"
+            "value" : "位置 ID"
+          }
+        }
+      }
+    },
+    "Logical Unit" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logical Unit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "逻辑单元"
+          }
+        }
+      }
+    },
+    "Mode" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模式"
+          }
+        }
+      }
+    },
+    "Mount Point" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mount Point"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "挂载点"
+          }
+        }
+      }
+    },
+    "No Device Connected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Device Connected"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未连接设备"
           }
         }
       }
@@ -389,50 +432,104 @@
         }
       }
     },
-    "Partition Map Type: %@" : {
+    "Partition Map Type" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Partition Map Type: %@"
+            "state" : "translated",
+            "value" : "Partition Map Type"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "分区映射类型：%@"
+            "value" : "分区映射类型"
           }
         }
       }
     },
-    "Power Allocated: %@" : {
+    "Port Status" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Power Allocated: %@"
+            "state" : "translated",
+            "value" : "Port Status"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已分配功率：%@"
+            "value" : "端口状态"
           }
         }
       }
     },
-    "Power Sink Capability: %@" : {
+    "Power Allocated" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Power Sink Capability: %@"
+            "state" : "translated",
+            "value" : "Power Allocated"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "电源吸收能力：%@"
+            "value" : "已分配功率"
+          }
+        }
+      }
+    },
+    "Power Sink Capability" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power Sink Capability"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取电能力"
+          }
+        }
+      }
+    },
+    "Product ID" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Product ID"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "产品 ID"
+          }
+        }
+      }
+    },
+    "Product Version" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Product Version"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "产品版本"
           }
         }
       }
@@ -453,98 +550,87 @@
         }
       }
     },
-    "Product ID: %@" : {
+    "Receptacle ID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Product ID: %@"
+            "state" : "translated",
+            "value" : "Receptacle ID"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "产品编号：%@"
+            "value" : "端口 ID"
           }
         }
       }
     },
-    "Product Version: %@" : {
+    "Removable Media" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Product Version: %@"
+            "state" : "translated",
+            "value" : "Removable Media"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "产品版本：%@"
+            "value" : "可移除介质"
           }
         }
       }
     },
-    "Receptacle Info:" : {
+    "Route String" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Receptacle Info:"
+            "state" : "translated",
+            "value" : "Route String"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "容器信息："
+            "value" : "路由字符串"
           }
         }
       }
     },
-    "Removable Media: %@" : {
+    "S.M.A.R.T. Status" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Removable Media: %@"
+            "state" : "translated",
+            "value" : "S.M.A.R.T. Status"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可移除媒体：%@"
+            "value" : "S.M.A.R.T. 状态"
           }
         }
       }
     },
-    "Route String: %@" : {
+    "Serial Number" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Route String: %@"
+            "state" : "translated",
+            "value" : "Serial Number"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "路由字符串：%@"
-          }
-        }
-      }
-    },
-    "Serial Number: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Serial Number: %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "序列号：%@"
+            "value" : "序列号"
           }
         }
       }
@@ -553,7 +639,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "Show More"
           }
         },
@@ -565,194 +651,219 @@
         }
       }
     },
-    "Size in Bytes: %lld" : {
+    "Size" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Size in Bytes: %lld"
+            "state" : "translated",
+            "value" : "Size"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "大小：%lld字节"
+            "value" : "容量"
           }
         }
       }
     },
-    "Size: %@" : {
+    "Speed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Size: %@"
+            "state" : "translated",
+            "value" : "Speed"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "尺寸：%@"
+            "value" : "速度"
           }
         }
       }
     },
-    "Smart Status: %@" : {
+    "Switch UID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Smart Status: %@"
+            "state" : "translated",
+            "value" : "Switch UID"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "智能状态：%@"
+            "value" : "交换机 UID"
           }
         }
       }
     },
-    "Speed: %@" : {
+    "Switch Version" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Speed: %@"
+            "state" : "translated",
+            "value" : "Switch Version"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "速度：%@"
+            "value" : "交换机版本"
           }
         }
       }
     },
-    "Switch UID: %@" : {
+    "Thunderbolt / USB4 Bus %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Switch UID: %@"
+            "state" : "translated",
+            "value" : "Thunderbolt / USB4 Bus %@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "交换机唯一ID：%@"
+            "value" : "雷雳 / USB4 总线 %@"
           }
         }
       }
     },
-    "Switch Version: %@" : {
+    "Thunderbolt 3" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Switch Version: %@"
+            "state" : "translated",
+            "value" : "Thunderbolt 3"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "交换机版本：%@"
+            "value" : "雷雳 3"
           }
         }
       }
     },
-    "USB Interface: %lld" : {
+    "USB 3.1" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "USB Interface: %lld"
+            "state" : "translated",
+            "value" : "USB 3.1"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "USB接口：%lld"
+            "value" : "USB 3.1"
           }
         }
       }
     },
-    "Vendor ID: %@" : {
+    "USB Interface" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Vendor ID: %@"
+            "state" : "translated",
+            "value" : "USB Interface"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "供应商id：%@"
+            "value" : "USB 接口"
           }
         }
       }
     },
-    "Vendor Name: %@" : {
+    "USB4" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Vendor Name: %@"
+            "state" : "translated",
+            "value" : "USB4"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "供应商名称：%@"
+            "value" : "USB4"
           }
         }
       }
     },
-    "Vendor: %@" : {
+    "Vendor" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Vendor: %@"
+            "state" : "translated",
+            "value" : "Vendor"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "供应商：%@"
+            "value" : "供应商"
           }
         }
       }
     },
-    "Volume UUID: %@" : {
+    "Vendor ID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Volume UUID: %@"
+            "state" : "translated",
+            "value" : "Vendor ID"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "卷唯一ID：%@"
+            "value" : "供应商 ID"
           }
         }
       }
     },
-    "Writable: %@" : {
+    "Volume UUID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Writable: %@"
+            "state" : "translated",
+            "value" : "Volume UUID"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可写：%@"
+            "value" : "卷 UUID"
+          }
+        }
+      }
+    },
+    "Writable" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Writable"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可写"
           }
         }
       }
