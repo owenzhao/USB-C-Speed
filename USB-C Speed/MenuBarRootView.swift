@@ -2,55 +2,80 @@
 //  MenuBarRootView.swift
 //  USB-C Speed
 //
-//  Created by zhaoxin on 2026-10-04.
+//  菜单栏弹出窗口的外壳：顶部用开关切换简洁/详细，底部放版本号和全局操作。
 //
 
 import SwiftUI
 import AppKit
 
 // MARK: - MenuBarRootView
-/// 菜单栏弹出窗口的外壳：顶部切换简洁/详细视图，底部放版本号和全局操作。
 struct MenuBarRootView: View {
   let usbData: USBData
   var onCheckForUpdates: () -> Void = {}
 
   @State private var showsDetailedView = false
+  /// 控制整棵树：切换时所有节点一起展开或收起。
+  @State private var allExpanded = false
 
-  private static let compactSize = CGSize(width: 380, height: 520)
-  private static let detailedSize = CGSize(width: 460, height: 640)
+  /// 两种视图共用同一棵树，只改宽度会让窗口在切换时跳一下，所以宽度固定。
+  private static let panelWidth: CGFloat = 460
+  private static let compactHeight: CGFloat = 520
+  private static let detailedHeight: CGFloat = 660
 
   var body: some View {
     VStack(spacing: 0) {
-      HStack {
-        Text("Show More")
-        Spacer()
-        Toggle("Show More", isOn: $showsDetailedView)
-          .labelsHidden()
-          .toggleStyle(.switch)
-      }
-      .padding(.horizontal)
-      .padding(.vertical, 8)
+      toolbar
 
       Divider()
 
-      content
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+      ScrollView {
+        content
+          .padding(.horizontal, 14)
+          .padding(.top, 12)
+          .padding(.bottom, 10)
+      }
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
 
       Divider()
 
       footer
     }
-    .frame(width: panelSize.width, height: panelSize.height)
+    .frame(width: Self.panelWidth, height: panelHeight)
+  }
+
+  private var toolbar: some View {
+    HStack(spacing: 12) {
+      Toggle("Show More", isOn: $showsDetailedView)
+        .toggleStyle(.switch)
+        .controlSize(.small)
+
+      Spacer(minLength: 8)
+
+      Button {
+        allExpanded.toggle()
+      } label: {
+        Label {
+          Text(allExpanded ? "Collapse All" : "Expand All")
+        } icon: {
+          Image(systemName: allExpanded
+                ? "rectangle.compress.vertical"
+                : "rectangle.expand.vertical")
+        }
+        .font(.callout)
+      }
+      .buttonStyle(.borderless)
+      .help(allExpanded ? "Collapse Every Node" : "Expand Every Node")
+    }
+    .padding(.horizontal, 14)
+    .padding(.vertical, 8)
   }
 
   @ViewBuilder
   private var content: some View {
     if showsDetailedView {
-      USBDataView(usbData: usbData)
+      USBDataView(usbData: usbData, allExpanded: $allExpanded)
     } else {
-      ScrollView {
-        SimplifiedUSBDataView(usbData: usbData)
-      }
+      SimplifiedUSBDataView(usbData: usbData, allExpanded: $allExpanded)
     }
   }
 
@@ -71,12 +96,12 @@ struct MenuBarRootView: View {
       }
       .buttonStyle(.borderless)
     }
-    .padding(.horizontal)
+    .padding(.horizontal, 14)
     .padding(.vertical, 6)
   }
 
-  private var panelSize: CGSize {
-    showsDetailedView ? Self.detailedSize : Self.compactSize
+  private var panelHeight: CGFloat {
+    showsDetailedView ? Self.detailedHeight : Self.compactHeight
   }
 
   private var versionText: String {
