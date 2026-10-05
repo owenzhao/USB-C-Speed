@@ -34,6 +34,10 @@
       .features { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
       .feature { min-height: 205px; padding: 25px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
       .feature-icon { color: var(--blue); font-size: 24px; } .feature h3 { margin: 18px 0 8px; font-size: 18px; } .feature p { margin: 0; color: var(--muted); font-size: 15px; }
+      .detail-showcase { display: grid; gap: 48px; align-items: center; grid-template-columns: .75fr 1.25fr; }
+      .detail-copy p { margin: 0; color: var(--muted); font-size: 18px; }
+      .detail-frame { overflow: hidden; margin: 0; border: 1px solid var(--line); border-radius: 16px; background: white; box-shadow: 0 28px 55px #16295225; }
+      .detail-frame img { display: block; width: 100%; height: auto; }
       .steps { display: grid; gap: 22px; grid-template-columns: repeat(3, 1fr); counter-reset: step; }
       .step { padding-top: 18px; border-top: 2px solid #a9c4ea; } .step::before { counter-increment: step; content: "0" counter(step); color: var(--blue); font-size: 13px; font-weight: 800; letter-spacing: .08em; } .step h3 { margin: 10px 0 6px; font-size: 18px; } .step p { margin: 0; color: var(--muted); }
       .about { display: grid; gap: 32px; align-items: center; grid-template-columns: .8fr 1.2fr; padding: 38px; border: 1px solid var(--line); border-radius: 22px; background: var(--surface); }
@@ -41,7 +45,7 @@
       .cta { padding: 42px; border-radius: 22px; color: white; background: linear-gradient(115deg, #0c438e, #1769e0 54%, #159f8b); } .cta h2 { max-width: 600px; } .cta p { max-width: 560px; color: #dceaff; } .cta .button { color: var(--cta-button-ink); border-color: white; background: white; }
       footer { padding: 28px 0 42px; color: var(--muted); font-size: 14px; }
       @media (prefers-color-scheme: dark) { :root { --ink: #edf4ff; --muted: #aab8ca; --line: #30425d; --blue: #6fa9ff; --mint: #66d8bc; --page: #101926; --surface: #182434; --soft: #223147; --hero-a: #153e3d; --hero-b: #1a3154; --cta-button-ink: #14213d; } .app-window { box-shadow: 0 28px 55px #00000055; } .step { border-color: #476795; } }
-      @media (max-width: 760px) { nav { align-items: flex-start; } .menu { justify-content: flex-end; gap: 10px 14px; flex-wrap: wrap; } .hero { padding-top: 112px; } .hero-grid, .features, .steps, .about { grid-template-columns: 1fr; } .app-window { max-width: 430px; margin: 0 auto; transform: none; } section { padding: 64px 0; } .cta, .about { padding: 30px; } }
+      @media (max-width: 760px) { nav { align-items: flex-start; } .menu { justify-content: flex-end; gap: 10px 14px; flex-wrap: wrap; } .hero { padding-top: 112px; } .hero-grid, .features, .steps, .detail-showcase, .about { grid-template-columns: 1fr; } .app-window { max-width: 430px; margin: 0 auto; transform: none; } .detail-showcase { gap: 28px; } .detail-frame { max-width: 520px; margin: 0 auto; } section { padding: 64px 0; } .cta, .about { padding: 30px; } }
     </style>
   </head>
   <body>
@@ -49,7 +53,7 @@
       <div class="wrap">
         <nav aria-label="Main navigation">
           <a class="brand" href="#top"><span class="bolt">ϟ</span> USB-C Speed</a>
-          <div class="menu"><a href="#features">Features</a><a href="#how-it-works">How It Works</a><a href="#about">About</a><a class="github" href="https://github.com/owenzhao/USB-C-Speed">GitHub ↗</a></div>
+          <div class="menu"><a href="#features">Features</a><a href="#details">Device Tree</a><a href="#how-it-works">How It Works</a><a href="#about">About</a><a class="github" href="https://github.com/owenzhao/USB-C-Speed">GitHub ↗</a></div>
         </nav>
         <div class="hero-grid">
           <div>
@@ -58,8 +62,8 @@
             <p class="lead">Explore a clearer, System Information-style device tree from the menu bar. Follow USB, Thunderbolt, and USB4 buses, inspect reported link speeds, and expand devices for details.</p>
             <div class="actions"><a class="button primary" href="https://github.com/owenzhao/USB-C-Speed">View on GitHub</a><a class="button" href="#features">Explore features</a></div>
           </div>
-          <div class="app-window" aria-label="USB-C Speed menu bar panel">
-            <img src="assets/sc-current.png" alt="USB-C Speed menu bar panel showing connected USB and Thunderbolt buses with a Show More switch" width="763" height="970">
+          <div class="app-window" aria-label="USB-C Speed compact menu bar view">
+            <img src="assets/sc-current.png" alt="USB-C Speed compact menu bar view showing USB and Thunderbolt / USB4 buses with reported link speeds" width="1012" height="1132">
           </div>
         </div>
       </div>
@@ -70,6 +74,7 @@
         <article class="feature"><div class="feature-icon">⌁</div><h3>Follow the device tree</h3><p>Browse buses, hubs, and nested devices in a familiar hierarchy. Expand entries for reported speeds and system details.</p></article>
         <article class="feature"><div class="feature-icon">◉</div><h3>Keep watch from the menu bar</h3><p>Refresh automatically and notify on device changes. Connected Bluetooth devices can show battery level and charging status.</p></article>
       </div></div></section>
+      <section id="details"><div class="wrap"><div class="detail-showcase"><div class="detail-copy"><p class="eyebrow">Expanded view</p><h2>Open the device tree for more detail.</h2><p>Turn on Show More to reveal bus drivers, connection types, port locations, and nested device speeds in the same clear hierarchy.</p></div><figure class="detail-frame"><img src="assets/sc-detail.png" alt="USB-C Speed expanded device tree showing bus details, nested USB hubs, and link speeds on a white background" width="1012" height="1412"></figure></div></div></section>
       <section id="how-it-works"><div class="wrap"><div class="section-head"><h2>A quick connection check, right from the menu bar.</h2><p>USB-C Speed stays in the menu bar, with a compact view for a quick check and a detailed device tree one switch away.</p></div><div class="steps"><article class="step"><h3>Launch once</h3><p>Open USB-C Speed. It registers as a login item the first time it runs.</p></article><article class="step"><h3>Open the menu bar panel</h3><p>Click the bolt icon to see connected USB, Thunderbolt, and USB4 devices.</p></article><article class="step"><h3>Expand the device tree</h3><p>Inspect the hierarchy, reported speeds, port status, and device properties.</p></article></div></div></section>
       <section id="about"><div class="wrap"><div class="about"><h2>About</h2><div><p>USB-C Speed is made by <a class="github" href="https://github.com/owenzhao">Owen Zhao</a>, an independent developer building focused native tools for Apple platforms.</p><p>It is a small, open-source utility for making one everyday question easier to answer: is this connection performing as expected?</p></div></div></div></section>
       <section><div class="wrap"><div class="cta"><h2>Make sure every USB-C cable runs at the speed you expect.</h2><p>For macOS 26 or later. The project is open source and can be built directly with Xcode.</p><div class="actions"><a class="button" href="https://github.com/owenzhao/USB-C-Speed">View the project on GitHub</a></div></div></div></section>

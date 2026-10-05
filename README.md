@@ -2,7 +2,8 @@
 
 USB-C Speed is a macOS menu bar utility that shows the live connection status of USB, Thunderbolt, and USB4 devices. It helps identify when a cable, dock, or port is limiting a high-speed device.
 
-![USB-C Speed](assets/sc-current.png)
+![USB-C Speed compact connection view](assets/sc-current.png)
+![USB-C Speed expanded device tree](assets/sc-detail.png)
 
 ## Features
 
